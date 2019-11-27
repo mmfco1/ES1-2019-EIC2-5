@@ -1,6 +1,25 @@
 
 public class Client {
-	public static void main() {
+	
+	public Client() {
+		run();
+	}
+	
+	
+	
+	
+	
+	
+	private void run() {
 		Gui g = new Gui();
+	}
+
+
+
+
+
+
+	public static void main() {
+
 	}
 }

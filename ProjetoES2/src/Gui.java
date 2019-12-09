@@ -1,30 +1,43 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+
+//import org.apache.poi.EncryptedDocumentException;
+//import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 public class Gui implements ActionListener {
 
 	private JFrame frame;
+	private JTable table;
 	private JButton choose;
+	private String[][] cols;
+	private final String[] ROWS = {"MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD",
+			"LAA", "is_long_method", "iPlasma", "PMD", "is_feature_envy"};
 
 	private void gui() {
 		frame = new JFrame();
 		JPanel mainP = new JPanel();
 		JPanel middleP = new JPanel();
 		JPanel bottomP = new JPanel();
-		JTextArea textA = new JTextArea();
-		JScrollPane scrollP = new JScrollPane(textA);
+		table = new JTable();
+		DefaultTableModel dtm = new DefaultTableModel(cols, ROWS);
+		table.setModel(dtm);
+		JScrollPane scrollP = new JScrollPane(table);
 		choose = new JButton("Choose");
 
-		textA.setEditable(true);
 
 		mainP.setLayout(new BorderLayout());
 		middleP.setLayout(new BorderLayout());
@@ -40,7 +53,7 @@ public class Gui implements ActionListener {
 
 		choose.addActionListener(this);
 
-		frame.setSize(500, 600);
+		frame.setSize(1500, 600);
 		frame.setContentPane(mainP);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
@@ -50,6 +63,9 @@ public class Gui implements ActionListener {
 	public Gui() {
 		gui();
 	}
+	/*
+	 * DESCOMENTAR TUDO O POSSIVEL NA GUI E NO FILEREADER
+	 */
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -66,12 +82,17 @@ public class Gui implements ActionListener {
 				System.out.println("here");
 				fileC.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fileC.showOpenDialog(frame);
-				
+				FileReader fr = new FileReader();
+				File file = fileC.getSelectedFile();
+//				try {
+//					String[][] temp = fr.createCols(file);
+//					DefaultTableModel dtm = new DefaultTableModel(temp, ROWS);
+//					table.setModel(dtm);
+//				} catch (EncryptedDocumentException | InvalidFormatException | IOException e1) {e1.printStackTrace();}
 				
 			}
 
 		} catch (IllegalArgumentException e2) {
-			// TODO: handle exception
 		}
 
 	}

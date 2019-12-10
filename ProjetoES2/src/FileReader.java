@@ -24,20 +24,15 @@ public class FileReader {
 //		String[][] cols = new String[7][12];
 //		wb = new XSSFWorkbook(file);
 //		sheet = wb.getSheetAt(0);
-//		int intRow = 0;
 //		DataFormatter dataFormatter = new DataFormatter();
 //
 //		for (Row row : sheet) {
 //			for (Cell cell : row) {
 //				String cellValue = dataFormatter.formatCellValue(cell);
-//				int intasd = cell.getColumnIndex();
-//				cols[intRow][intasd] = cellValue;
+//				cols[cell.getRowIndex()][cell.getColumnIndex()] = cellValue;
 //				
 //			}
-//			intRow++;
 //		}
-//
-//		System.out.println(cols);
 //		return cols;
 //	}
 

@@ -35,8 +35,9 @@ public class Worker {
 		sheet = wb.getSheetAt(0);
 		int introws = sheet.getPhysicalNumberOfRows();
 		DataFormatter dataFormatter = new DataFormatter();
-		String[][] cols = new String[introws][sheet.getRow(0).getLastCellNum()];
+		String[][] cols = new String[introws][ROW_LENGTH];
 
+		//PERCORRER O EXCEL E PREENCHER A MATRIZ
 		for (Row row : sheet) {
 			for (Cell cell : row) {
 				String cellValue = dataFormatter.formatCellValue(cell);
@@ -66,4 +67,4 @@ public class Worker {
 
 	}
 
-} //nice
+} 

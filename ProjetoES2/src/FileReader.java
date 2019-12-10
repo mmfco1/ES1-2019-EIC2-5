@@ -30,7 +30,6 @@ public class FileReader {
 //			for (Cell cell : row) {
 //				String cellValue = dataFormatter.formatCellValue(cell);
 //				cols[cell.getRowIndex()][cell.getColumnIndex()] = cellValue;
-//				
 //			}
 //		}
 //		return cols;

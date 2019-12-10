@@ -15,8 +15,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
 
-//import org.apache.poi.EncryptedDocumentException;
-//import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 public class Gui implements ActionListener {
 
@@ -24,8 +24,8 @@ public class Gui implements ActionListener {
 	private JTable table;
 	private JButton choose;
 	private String[][] cols;
-	private final String[] ROWS = {"MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD",
-			"LAA", "is_long_method", "iPlasma", "PMD", "is_feature_envy"};
+	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
+			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
 
 	private void gui() {
 		frame = new JFrame();
@@ -37,7 +37,6 @@ public class Gui implements ActionListener {
 		table.setModel(dtm);
 		JScrollPane scrollP = new JScrollPane(table);
 		choose = new JButton("Choose");
-
 
 		mainP.setLayout(new BorderLayout());
 		middleP.setLayout(new BorderLayout());
@@ -63,9 +62,6 @@ public class Gui implements ActionListener {
 	public Gui() {
 		gui();
 	}
-	/*
-	 * DESCOMENTAR TUDO O POSSIVEL NA GUI E NO FILEREADER
-	 */
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -74,22 +70,23 @@ public class Gui implements ActionListener {
 			System.out.println(e.toString());
 
 			if (e.getActionCommand().equals("Choose")) {
-				
-				
+
 				JFileChooser fileC = new JFileChooser();
-				
+
 				fileC.setCurrentDirectory(new java.io.File("."));
 				System.out.println("here");
 				fileC.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fileC.showOpenDialog(frame);
 				FileReader fr = new FileReader();
 				File file = fileC.getSelectedFile();
-//				try {
-//					String[][] temp = fr.createCols(file);
-//					DefaultTableModel dtm = new DefaultTableModel(temp, ROWS);
-//					table.setModel(dtm);
-//				} catch (EncryptedDocumentException | InvalidFormatException | IOException e1) {e1.printStackTrace();}
-				
+				try {
+					String[][] temp = fr.createCols(file);
+					DefaultTableModel dtm = new DefaultTableModel(temp, ROWS);
+					table.setModel(dtm);
+				} catch (EncryptedDocumentException | InvalidFormatException | IOException e1) {
+					e1.printStackTrace();
+				}
+
 			}
 
 		} catch (IllegalArgumentException e2) {

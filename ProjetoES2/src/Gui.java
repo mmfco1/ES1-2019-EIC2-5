@@ -26,7 +26,7 @@ public class Gui implements ActionListener {
 	private JButton choose, thresholds, edit, run;
 	private String[][] cols;
 	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
-			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
+			"is_long_method", "iPlasma", "PMD", "is_feature_envy"};
 
 	/*
 	 * criacao do gui Francisco Veiga
@@ -90,7 +90,8 @@ public class Gui implements ActionListener {
 				File file = fileC.getSelectedFile();
 				try {
 					String[][] temp = w.createCols(file);
-					DefaultTableModel dtm = new DefaultTableModel(temp, ROWS);
+					String[] topRow = temp[0];
+					DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
 					table.setModel(dtm);
 				} catch (EncryptedDocumentException | InvalidFormatException | IOException e1) {
 					e1.printStackTrace();

@@ -100,7 +100,9 @@ public class Gui implements ActionListener {
 				gui2();
 			} else if (e.getActionCommand().equals("Correr")) {
 
-			} else if (e.getActionCommand().equals("Editar"))
+			} else if (e.getActionCommand().equals("Criar Regra")) {
+				new GUIregras();
+			}
 				;
 
 		} catch (IllegalArgumentException e2) {
@@ -115,7 +117,7 @@ public class Gui implements ActionListener {
 		frame2 = new JFrame("Thresholds");
 
 		JTextArea ta = new JTextArea();
-		edit = new JButton("Editar");
+		edit = new JButton("Criar Regra");
 		run = new JButton("Correr");
 
 		JPanel middle = new JPanel();

@@ -80,7 +80,7 @@ public class Worker {
 	public String[][] applyRule(String[][] sheet){
 		
 		
-		return null;
+		return sheet;
 	}
 	
 	

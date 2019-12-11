@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -10,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
@@ -19,9 +21,9 @@ import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 public class Gui implements ActionListener {
 
-	private JFrame frame;
+	private JFrame frame, frame2;
 	private JTable table;
-	private JButton choose, thresholds;
+	private JButton choose, thresholds, edit,run;
 	private String[][] cols;
 	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
 			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
@@ -32,7 +34,7 @@ public class Gui implements ActionListener {
 	 * Francisco Veiga
 	 */
 	private void gui() {
-		frame = new JFrame();
+		frame = new JFrame("Exel");
 		JPanel mainP = new JPanel();
 		JPanel middleP = new JPanel();
 		JPanel bottomP = new JPanel();
@@ -45,7 +47,7 @@ public class Gui implements ActionListener {
 
 		mainP.setLayout(new BorderLayout());
 		middleP.setLayout(new BorderLayout());
-		bottomP.setLayout(new BorderLayout());
+		bottomP.setLayout(new GridLayout(1,2));
 
 		scrollP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
@@ -100,10 +102,51 @@ public class Gui implements ActionListener {
 				}
 
 			}
+			else if (e.getActionCommand().equals("Tresholds")) {
+				gui2();
+			}
+			else if (e.getActionCommand().equals("Correr")) {
+				
+			}
+			else if (e.getActionCommand().equals("Editar"));
 
 		} catch (IllegalArgumentException e2) {
 		}
 
+	}
+	/*
+	 * 2 gui
+	 * Francisco Veiga
+	 */
+	private void gui2() {
+		frame2 = new JFrame("Thresholds");
+		
+		JTextArea ta = new JTextArea();
+		edit = new JButton("Editar");
+		run = new JButton("Correr");
+		
+		JPanel middle = new JPanel();
+		JPanel bot = new JPanel();
+		
+		middle.setLayout(new BorderLayout());
+		bot.setLayout(new GridLayout(1,2));
+		
+		bot.add(edit);
+		bot.add(run);
+		middle.add(ta, BorderLayout.CENTER);
+		
+		edit.addActionListener(this);
+		run.addActionListener(this);
+		
+		middle.add(bot, BorderLayout.SOUTH);
+		
+		frame2.setContentPane(middle);
+		frame2.setVisible(true);
+		frame2.setSize(300, 200);
+		frame2.setLocationRelativeTo(null);
+		frame2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		
+		
 	}
 
 }

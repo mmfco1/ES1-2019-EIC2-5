@@ -1,6 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -84,10 +83,7 @@ public class GUIregras implements ActionListener {
 		frame.add(LAA);
 		frame.add(OK);
 
-		LOC.addActionListener(this);
-		Cyclo.addActionListener(this);
-		ATFD.addActionListener(this);
-		LAA.addActionListener(this);
+		
 		OK.addActionListener(this);
 
 		frame.add(tf);

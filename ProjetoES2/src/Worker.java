@@ -33,9 +33,9 @@ public class Worker {
 	public String[][] createCols(File file) throws InvalidFormatException, IOException {
 		wb = new XSSFWorkbook(file);
 		sheet = wb.getSheetAt(0);
-		int introws = sheet.getPhysicalNumberOfRows();
+		int lastRowNum = sheet.getLastRowNum();
 		DataFormatter dataFormatter = new DataFormatter();
-		String[][] cols = new String[introws][ROW_LENGTH];
+		String[][] cols = new String[lastRowNum + 1][ROW_LENGTH];
 
 		//PERCORRER O EXCEL E PREENCHER A MATRIZ
 		for (Row row : sheet) {

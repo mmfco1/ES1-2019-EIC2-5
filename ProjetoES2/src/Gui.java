@@ -26,7 +26,7 @@ public class Gui implements ActionListener {
 	private JButton choose, thresholds, edit, run;
 	private String[][] cols;
 	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
-			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
+			"is_long_method", "iPlasma", "PMD", "is_feature_envy"};
 
 	/*
 	 * criacao do gui Francisco Veiga
@@ -90,7 +90,8 @@ public class Gui implements ActionListener {
 				File file = fileC.getSelectedFile();
 				try {
 					String[][] temp = w.createCols(file);
-					DefaultTableModel dtm = new DefaultTableModel(temp, ROWS);
+					String[] topRow = temp[0];
+					DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
 					table.setModel(dtm);
 				} catch (EncryptedDocumentException | InvalidFormatException | IOException e1) {
 					e1.printStackTrace();
@@ -100,7 +101,9 @@ public class Gui implements ActionListener {
 				gui2();
 			} else if (e.getActionCommand().equals("Correr")) {
 
-			} else if (e.getActionCommand().equals("Editar"))
+			} else if (e.getActionCommand().equals("Criar Regra")) {
+				new GUIregras();
+			}
 				;
 
 		} catch (IllegalArgumentException e2) {
@@ -115,7 +118,7 @@ public class Gui implements ActionListener {
 		frame2 = new JFrame("Thresholds");
 
 		JTextArea ta = new JTextArea();
-		edit = new JButton("Editar");
+		edit = new JButton("Criar Regra");
 		run = new JButton("Correr");
 
 		JPanel middle = new JPanel();

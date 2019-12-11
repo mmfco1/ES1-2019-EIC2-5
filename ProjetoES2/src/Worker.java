@@ -18,6 +18,23 @@ public class Worker {
 
 	}
 
+	public String[][] createCols(File file) throws InvalidFormatException, IOException {
+		wb = new XSSFWorkbook(file);
+		sheet = wb.getSheetAt(0);
+		int lastRowNum = sheet.getLastRowNum();
+		DataFormatter dataFormatter = new DataFormatter();
+		String[][] cols = new String[lastRowNum + 1][ROW_LENGTH];
+
+		// PERCORRER O EXCEL E PREENCHER A MATRIZ
+		for (Row row : sheet) {
+			for (Cell cell : row) {
+				String cellValue = dataFormatter.formatCellValue(cell);
+				cols[cell.getRowIndex()][cell.getColumnIndex()] = cellValue;
+			}
+		}
+		return cols;
+	}
+
 	public boolean is_long_method(int loc, int locThreshold, int cyclo, int cycloThreshold) {
 		if (loc > locThreshold && cyclo > cycloThreshold)
 			return true;
@@ -28,23 +45,6 @@ public class Worker {
 		if (atfd > atfdThreshold && laa < laaThreshold)
 			return true;
 		return false;
-	}
-
-	public String[][] createCols(File file) throws InvalidFormatException, IOException {
-		wb = new XSSFWorkbook(file);
-		sheet = wb.getSheetAt(0);
-		int lastRowNum = sheet.getLastRowNum();
-		DataFormatter dataFormatter = new DataFormatter();
-		String[][] cols = new String[lastRowNum + 1][ROW_LENGTH];
-
-		//PERCORRER O EXCEL E PREENCHER A MATRIZ
-		for (Row row : sheet) {
-			for (Cell cell : row) {
-				String cellValue = dataFormatter.formatCellValue(cell);
-				cols[cell.getRowIndex()][cell.getColumnIndex()] = cellValue;
-			}
-		}
-		return cols;
 	}
 
 	public void checkMethods(String[][] sheet, int loc, int cyclo, int atfd, int laa) {
@@ -67,4 +67,4 @@ public class Worker {
 
 	}
 
-} 
+}

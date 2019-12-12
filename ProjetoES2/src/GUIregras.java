@@ -14,7 +14,7 @@ public class GUIregras implements ActionListener {
 	private JFrame frame;
 	private JToggleButton LOC, Cyclo, ATFD, LAA;
 	private JButton OK;
-	private ArrayList<Regras> list;
+	private ArrayList<Regras> list = new ArrayList<Regras>();
 
 	private void guiRegras() {
 		frame = new JFrame();
@@ -85,7 +85,6 @@ public class GUIregras implements ActionListener {
 		frame.add(LAA);
 		frame.add(OK);
 
-		
 		OK.addActionListener(this);
 
 		frame.add(tf);
@@ -121,12 +120,11 @@ public class GUIregras implements ActionListener {
 	public GUIregras() {
 		guiRegras();
 	}
-	
+
 	public ArrayList<Regras> getRegras() {
-		
-		
+
 		return list;
-		
+
 	}
 
 	@Override
@@ -142,7 +140,6 @@ public class GUIregras implements ActionListener {
 			} else if (LOC.isSelected()) {
 
 			}
-			
 
 		}
 

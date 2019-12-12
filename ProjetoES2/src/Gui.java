@@ -107,6 +107,7 @@ public class Gui implements ActionListener {
 
 			} else if (e.getActionCommand().equals("Criar Regra")) {
 				GUIregras gr = new GUIregras();
+				
 				regraslist = gr.getRegras();
 				regraslist.add(new Regras("test", 0, 0, 0, 0));
 				

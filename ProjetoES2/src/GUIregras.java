@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
@@ -126,7 +125,7 @@ public class GUIregras implements ActionListener {
 	public ArrayList<Regras> getRegras() {
 		
 		
-		return null;
+		return list;
 		
 	}
 

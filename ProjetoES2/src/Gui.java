@@ -27,7 +27,7 @@ public class Gui implements ActionListener {
 	private JTable table;
 	private JScrollPane sp;
 	private JList<String> list;
-	private ArrayList<Regras> regraslist;
+	private ArrayList<Regras> regraslist = new ArrayList<Regras>();
 	private DefaultListModel<String> dl;
 	private JButton choose, thresholds, edit, run;
 	private String[][] cols;
@@ -104,23 +104,30 @@ public class Gui implements ActionListener {
 			} else if (e.getActionCommand().equals("Tresholds")) {
 				gui2();
 			} else if (e.getActionCommand().equals("Correr")) {
-
+				regraslist.get(list.getSelectedIndex());
+				frame2.dispose();
+				
 			} else if (e.getActionCommand().equals("Criar Regra")) {
-				GUIregras gr = new GUIregras();
+				GUIregras gr = new GUIregras(this);
 				
-				regraslist = gr.getRegras();
-				regraslist.add(new Regras("test", 0, 0, 0, 0));
-				
-				for (Regras regras : regraslist) {
-					dl.addElement(regras.getNome());
-				}
-
 			}
-			;
+
+			
+			
 
 		} catch (IllegalArgumentException e2) {
 		}
 
+	}
+	
+	
+
+	public void setRegraslist(ArrayList<Regras> regraslist) {
+		this.regraslist = regraslist;
+		
+		for (Regras regras : regraslist) {
+			dl.addElement(regras.getNome());
+		}
 	}
 
 	/*

@@ -19,7 +19,5 @@ public class Client {
 
 
 
-	public static void main() {
-		Client c = new Client();
-	}
+
 }

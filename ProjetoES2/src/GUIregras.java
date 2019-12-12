@@ -3,8 +3,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
@@ -15,6 +17,9 @@ public class GUIregras implements ActionListener {
 	private JToggleButton LOC, Cyclo, ATFD, LAA;
 	private JButton OK;
 	private ArrayList<Regras> list = new ArrayList<Regras>();
+	private Gui gui;
+	private JTextField ntf ,maiorLOCTF, maiorCYCLOTF, maiorATFDTF, maiorLAATF, menorLOCTF, menorCYCLOTF, menorATFDTF,
+			menorLAATF;
 
 	private void guiRegras() {
 		frame = new JFrame();
@@ -31,19 +36,19 @@ public class GUIregras implements ActionListener {
 
 		JLabel name = new JLabel("Nome da regra");
 
-		JTextField tf = new JTextField("");
+		ntf = new JTextField("");
 
-		JTextField maiorLOCTF = new JTextField("");
-		JTextField maiorCYCLOTF = new JTextField("");
-		JTextField maiorATFDTF = new JTextField("");
-		JTextField maiorLAATF = new JTextField("");
+		maiorLOCTF = new JTextField("");
+		maiorCYCLOTF = new JTextField("");
+		maiorATFDTF = new JTextField("");
+		maiorLAATF = new JTextField("");
 
-		JTextField menorLOCTF = new JTextField("");
-		JTextField menorCYCLOTF = new JTextField("");
-		JTextField menorATFDTF = new JTextField("");
-		JTextField menorLAATF = new JTextField("");
+		menorLOCTF = new JTextField("");
+		menorCYCLOTF = new JTextField("");
+		menorATFDTF = new JTextField("");
+		menorLAATF = new JTextField("");
 
-		tf.setBounds(10, 35, 150, 30);
+		ntf.setBounds(10, 35, 150, 30);
 
 		LOC = new JToggleButton("LOC");
 		Cyclo = new JToggleButton("Cyclo");
@@ -87,7 +92,7 @@ public class GUIregras implements ActionListener {
 
 		OK.addActionListener(this);
 
-		frame.add(tf);
+		frame.add(ntf);
 		// adding the jlabels to frame
 		frame.add(name);
 		frame.add(maiorLOC);
@@ -117,8 +122,9 @@ public class GUIregras implements ActionListener {
 
 	}
 
-	public GUIregras() {
+	public GUIregras(Gui gui) {
 		guiRegras();
+		this.gui = gui;
 	}
 
 	public ArrayList<Regras> getRegras() {
@@ -129,20 +135,54 @@ public class GUIregras implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getActionCommand());
-		if (e.getActionCommand().equals("OK")) {
-			if (Cyclo.isSelected()) {
+//		int cma = 0, cme = 0, ama = 0, ame = 0, lama = 0, lame = 0, loma = 0, lome = 0;
+		int c= 0, a= 0, la= 0, lo= 0;
+		try {
+			if (e.getActionCommand().equals("OK")) {
+				if (Cyclo.isSelected()) {
+					if (!maiorCYCLOTF.getText().equals("")) {
+						System.out.println("here");
+						c = Integer.parseInt(maiorCYCLOTF.getText());
 
-			} else if (ATFD.isSelected()) {
+					} else if (!menorCYCLOTF.getText().equals("")) {
+						c = Integer.parseInt(menorCYCLOTF.getText());
+						c = c * (-1);
 
-			} else if (LAA.isSelected()) {
+					}
+				}  if (ATFD.isSelected()) {
+					if (!ATFD.getText().equals("")) {
+						a = Integer.parseInt(maiorATFDTF.getText());
+					} else if (!ATFD.getText().equals("")) {
+						a = Integer.parseInt(menorATFDTF.getText());
+						a = a * (-1);
+					}
 
-			} else if (LOC.isSelected()) {
-
+				}  if (LAA.isSelected()) {
+					if (!LAA.getText().equals("")) {
+						la = Integer.parseInt(maiorLAATF.getText());
+					} else if (!LAA.getText().equals("")) {
+						la = Integer.parseInt(menorLAATF.getText());
+						la = la * (-1);
+					}
+				}  if (LOC.isSelected()) {
+					if (!LOC.getText().equals("")) {
+						lo = Integer.parseInt(maiorLOCTF.getText());
+					} else if (!LOC.getText().equals("")) {
+						lo = Integer.parseInt(menorLOCTF.getText());
+						lo = lo * (-1);
+					}
+				}
+				
+				Regras regra = new Regras(ntf.getText(), lo, a, c, la);
+				
+				list.add(regra);
+				
+				gui.setRegraslist(list);
+				frame.dispose();
 			}
-
+		} catch (NumberFormatException ee) {
+			JOptionPane.showMessageDialog(frame, "Input Errado");
 		}
-
 	}
 
 }

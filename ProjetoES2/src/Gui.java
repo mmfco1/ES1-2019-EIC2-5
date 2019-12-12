@@ -4,10 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -23,10 +26,14 @@ public class Gui implements ActionListener {
 
 	private JFrame frame, frame2;
 	private JTable table;
+	private JScrollPane sp;
+	private JList<String> list;
+	private ArrayList<Regras> regraslist;
+	private DefaultListModel<String> dl;
 	private JButton choose, thresholds, edit, run;
 	private String[][] cols;
 	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
-			"is_long_method", "iPlasma", "PMD", "is_feature_envy"};
+			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
 
 	/*
 	 * criacao do gui Francisco Veiga
@@ -77,8 +84,6 @@ public class Gui implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 
-			System.out.println(e.toString());
-
 			if (e.getActionCommand().equals("Choose")) {
 
 				JFileChooser fileC = new JFileChooser();
@@ -102,9 +107,16 @@ public class Gui implements ActionListener {
 			} else if (e.getActionCommand().equals("Correr")) {
 
 			} else if (e.getActionCommand().equals("Criar Regra")) {
-				new GUIregras();
+				GUIregras gr = new GUIregras();
+				regraslist = gr.getRegras();
+				regraslist.add(new Regras("test", 0, 0, 0, 0));
+				
+				for (Regras regras : regraslist) {
+					dl.addElement(regras.getNome());
+				}
+
 			}
-				;
+			;
 
 		} catch (IllegalArgumentException e2) {
 		}
@@ -117,7 +129,10 @@ public class Gui implements ActionListener {
 	private void gui2() {
 		frame2 = new JFrame("Thresholds");
 
-		JTextArea ta = new JTextArea();
+		list = new JList<String>();
+		dl = new DefaultListModel<String>();
+		sp = new JScrollPane(list);
+
 		edit = new JButton("Criar Regra");
 		run = new JButton("Correr");
 
@@ -127,9 +142,10 @@ public class Gui implements ActionListener {
 		middle.setLayout(new BorderLayout());
 		bot.setLayout(new GridLayout(1, 2));
 
+		list.setModel(dl);
 		bot.add(edit);
 		bot.add(run);
-		middle.add(ta, BorderLayout.CENTER);
+		middle.add(sp, BorderLayout.CENTER);
 
 		edit.addActionListener(this);
 		run.addActionListener(this);

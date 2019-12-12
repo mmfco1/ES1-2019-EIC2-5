@@ -1,8 +1,11 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
@@ -12,7 +15,7 @@ public class GUIregras implements ActionListener {
 	private JFrame frame;
 	private JToggleButton LOC, Cyclo, ATFD, LAA;
 	private JButton OK;
-	private String nome;
+	private ArrayList<Regras> list;
 
 	private void guiRegras() {
 		frame = new JFrame();
@@ -119,6 +122,13 @@ public class GUIregras implements ActionListener {
 	public GUIregras() {
 		guiRegras();
 	}
+	
+	public ArrayList<Regras> getRegras() {
+		
+		
+		return null;
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -133,6 +143,7 @@ public class GUIregras implements ActionListener {
 			} else if (LOC.isSelected()) {
 
 			}
+			
 
 		}
 

@@ -127,14 +127,11 @@ public class GUIregras implements ActionListener {
 		this.gui = gui;
 	}
 
-	public ArrayList<Regras> getRegras() {
 
-		return list;
-
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		list.clear();
 //		int cma = 0, cme = 0, ama = 0, ame = 0, lama = 0, lame = 0, loma = 0, lome = 0;
 		int c= 0, a= 0, la= 0, lo= 0;
 		try {

@@ -104,9 +104,10 @@ public class Gui implements ActionListener {
 			} else if (e.getActionCommand().equals("Tresholds")) {
 				gui2();
 			} else if (e.getActionCommand().equals("Correr")) {
-				regraslist.get(list.getSelectedIndex());
-				frame2.dispose();
-
+				if (list.getSelectedIndex() != -1) {
+					regraslist.get(list.getSelectedIndex());
+					frame2.dispose();
+				}
 			} else if (e.getActionCommand().equals("Criar")) {
 				GUIregras gr = new GUIregras(this);
 
@@ -115,7 +116,7 @@ public class Gui implements ActionListener {
 					System.out.println(list.getSelectedIndex());
 					System.out.println(regraslist.get(list.getSelectedIndex()));
 					regraslist.remove(list.getSelectedIndex());
-					
+
 					dl.remove(list.getSelectedIndex());
 				}
 			}
@@ -126,7 +127,7 @@ public class Gui implements ActionListener {
 	}
 
 	public void setRegraslist(ArrayList<Regras> regraslist) {
-		this.regraslist = regraslist;
+		this.regraslist.addAll(regraslist);
 
 		for (Regras regras : regraslist) {
 			dl.addElement(regras.getNome());

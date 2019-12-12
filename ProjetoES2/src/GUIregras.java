@@ -18,7 +18,7 @@ public class GUIregras implements ActionListener {
 	private JButton OK;
 	private ArrayList<Regras> list = new ArrayList<Regras>();
 	private Gui gui;
-	private JTextField ntf ,maiorLOCTF, maiorCYCLOTF, maiorATFDTF, maiorLAATF, menorLOCTF, menorCYCLOTF, menorATFDTF,
+	private JTextField ntf, maiorLOCTF, maiorCYCLOTF, maiorATFDTF, maiorLAATF, menorLOCTF, menorCYCLOTF, menorATFDTF,
 			menorLAATF;
 
 	private void guiRegras() {
@@ -127,13 +127,11 @@ public class GUIregras implements ActionListener {
 		this.gui = gui;
 	}
 
-
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		list.clear();
 //		int cma = 0, cme = 0, ama = 0, ame = 0, lama = 0, lame = 0, loma = 0, lome = 0;
-		int c= 0, a= 0, la= 0, lo= 0;
+		int c = 0, a = 0, la = 0, lo = 0;
 		try {
 			if (e.getActionCommand().equals("OK")) {
 				if (Cyclo.isSelected()) {
@@ -146,7 +144,8 @@ public class GUIregras implements ActionListener {
 						c = c * (-1);
 
 					}
-				}  if (ATFD.isSelected()) {
+				}
+				if (ATFD.isSelected()) {
 					if (!ATFD.getText().equals("")) {
 						a = Integer.parseInt(maiorATFDTF.getText());
 					} else if (!ATFD.getText().equals("")) {
@@ -154,14 +153,16 @@ public class GUIregras implements ActionListener {
 						a = a * (-1);
 					}
 
-				}  if (LAA.isSelected()) {
+				}
+				if (LAA.isSelected()) {
 					if (!LAA.getText().equals("")) {
 						la = Integer.parseInt(maiorLAATF.getText());
 					} else if (!LAA.getText().equals("")) {
 						la = Integer.parseInt(menorLAATF.getText());
 						la = la * (-1);
 					}
-				}  if (LOC.isSelected()) {
+				}
+				if (LOC.isSelected()) {
 					if (!LOC.getText().equals("")) {
 						lo = Integer.parseInt(maiorLOCTF.getText());
 					} else if (!LOC.getText().equals("")) {
@@ -173,9 +174,9 @@ public class GUIregras implements ActionListener {
 					throw new NumberFormatException();
 				}
 				Regras regra = new Regras(ntf.getText(), lo, a, c, la);
-				
+
 				list.add(regra);
-				
+
 				gui.setRegraslist(list);
 				frame.dispose();
 			}

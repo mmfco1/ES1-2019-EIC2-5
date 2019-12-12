@@ -172,7 +172,9 @@ public class GUIregras implements ActionListener {
 						lo = lo * (-1);
 					}
 				}
-				
+				if (ntf.getText().equals("")) {
+					throw new NumberFormatException();
+				}
 				Regras regra = new Regras(ntf.getText(), lo, a, c, la);
 				
 				list.add(regra);

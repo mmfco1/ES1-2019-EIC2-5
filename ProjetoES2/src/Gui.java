@@ -29,7 +29,7 @@ public class Gui implements ActionListener {
 	private JList<String> list;
 	private ArrayList<Regras> regraslist = new ArrayList<Regras>();
 	private DefaultListModel<String> dl;
-	private JButton choose, thresholds, edit, run;
+	private JButton choose, thresholds, edit, run, del;
 	private String[][] cols;
 	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
 			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
@@ -106,25 +106,28 @@ public class Gui implements ActionListener {
 			} else if (e.getActionCommand().equals("Correr")) {
 				regraslist.get(list.getSelectedIndex());
 				frame2.dispose();
-				
-			} else if (e.getActionCommand().equals("Criar Regra")) {
-				GUIregras gr = new GUIregras(this);
-				
-			}
 
-			
-			
+			} else if (e.getActionCommand().equals("Criar")) {
+				GUIregras gr = new GUIregras(this);
+
+			} else if (e.getActionCommand().equals("Delete")) {
+				if (list.getSelectedIndex() != -1) {
+					System.out.println(list.getSelectedIndex());
+					System.out.println(regraslist.get(list.getSelectedIndex()));
+					regraslist.remove(list.getSelectedIndex());
+					
+					dl.remove(list.getSelectedIndex());
+				}
+			}
 
 		} catch (IllegalArgumentException e2) {
 		}
 
 	}
-	
-	
 
 	public void setRegraslist(ArrayList<Regras> regraslist) {
 		this.regraslist = regraslist;
-		
+
 		for (Regras regras : regraslist) {
 			dl.addElement(regras.getNome());
 		}
@@ -140,20 +143,23 @@ public class Gui implements ActionListener {
 		dl = new DefaultListModel<String>();
 		sp = new JScrollPane(list);
 
-		edit = new JButton("Criar Regra");
+		edit = new JButton("Criar");
 		run = new JButton("Correr");
+		del = new JButton("Delete");
 
 		JPanel middle = new JPanel();
 		JPanel bot = new JPanel();
 
 		middle.setLayout(new BorderLayout());
-		bot.setLayout(new GridLayout(1, 2));
+		bot.setLayout(new GridLayout(1, 3));
 
 		list.setModel(dl);
 		bot.add(edit);
+		bot.add(del);
 		bot.add(run);
 		middle.add(sp, BorderLayout.CENTER);
 
+		del.addActionListener(this);
 		edit.addActionListener(this);
 		run.addActionListener(this);
 

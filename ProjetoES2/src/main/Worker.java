@@ -1,3 +1,4 @@
+package main;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,14 +15,7 @@ public class Worker {
 	private XSSFSheet sheet;
 	private Gui gui;
 
-//	private final int ROW_LENGTH = 12;
-	public enum RuleType {
-		BIGGER, SMALLER, EQUAL
-	};
 
-	public enum Metric {
-		LOC, CYCLO, ATFD, LAA
-	};
 
 	public Worker(Gui gui) {
 		this.gui = gui;
@@ -76,9 +70,7 @@ public class Worker {
 		for (int i = 0; i < sheet.length; i++) {
 
 			for (int j = 0; j < lastCol; j++) {
-				if (i == 14 && j == 12) {
-					System.out.println("TAKE COVER");
-				}
+
 				if (j < lastsheetCol) {
 					// SE DESCOMENTAR ESTA LINHA JA NÃO FUNCIONA
 					temp[i][j] = sheet[i][j];

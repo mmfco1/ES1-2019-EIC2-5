@@ -28,7 +28,7 @@ public class Gui implements ActionListener {
 	private JList<String> list;
 	private ArrayList<Regras> regraslist = new ArrayList<Regras>();
 	private DefaultListModel<String> dl = new DefaultListModel<String>();
-	private JButton choose, thresholds, edit, run, del, vis;
+	private JButton choose, thresholds, criar, comparar, edit, run, del, vis;
 	private Regras regrabase, regrabase2;
 	private boolean delRegraBase = true, delRegraBase2 = true;
 	private String[][] cols;
@@ -125,19 +125,25 @@ public class Gui implements ActionListener {
 
 			} else if (e.getActionCommand().equals("Delete")) {
 				if (list.getSelectedIndex() != -1) {
-					if (regraslist.get(list.getSelectedIndex()).equals(regrabase)) {
-						delRegraBase = false;
-					} else if (regraslist.get(list.getSelectedIndex()).equals(regrabase2)) {
-						delRegraBase2 = false;
+					if (regraslist.get(list.getSelectedIndex()).equals(regrabase)
+							|| regraslist.get(list.getSelectedIndex()).equals(regrabase2)) {
+						JOptionPane.showMessageDialog(frame2, "Nao podes apagar as thresholds base");
+					} else {
+
+						regraslist.remove(list.getSelectedIndex());
+						guiUpdate(regraslist);
 					}
-
-					regraslist.remove(list.getSelectedIndex());
-					guiUpdate(regraslist);
-
 				}
 			} else if (e.getActionCommand().equals("Visualizar")) {
 				GUIregras gr = new GUIregras(regraslist.get(list.getSelectedIndex()));
 
+			} else if (e.getActionCommand().equals("Editar")) {
+
+			} else if (e.getActionCommand().equals("Comparar")) {
+				Object[] options = { "IPlasma", "PMD" };
+				int n = JOptionPane.showOptionDialog(frame2, "Qual quer comparar ?", "",
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+				System.out.println(n);
 			}
 
 		} catch (IllegalArgumentException e2) {
@@ -164,14 +170,16 @@ public class Gui implements ActionListener {
 	private void gui2() {
 
 		ArrayList<Regras> first = new ArrayList<Regras>();
-		ArrayList<Regras> second = new ArrayList<Regras>();
+
 		frame2 = new JFrame("Thresholds");
 
 		list = new JList<String>();
 		sp = new JScrollPane(list);
 
-		edit = new JButton("Criar");
+		criar = new JButton("Criar");
 		run = new JButton("Correr");
+		edit = new JButton("Editar");
+		comparar = new JButton("Comparar");
 		del = new JButton("Delete");
 		vis = new JButton("Visualizar");
 
@@ -182,41 +190,41 @@ public class Gui implements ActionListener {
 		bot.setLayout(new GridLayout(1, 4));
 
 		list.setModel(dl);
-		bot.add(edit);
+		bot.add(criar);
 		bot.add(vis);
+		bot.add(comparar);
+		bot.add(edit);
 		bot.add(del);
 		bot.add(run);
+
 		middle.add(sp, BorderLayout.CENTER);
 
+		criar.addActionListener(this);
 		del.addActionListener(this);
 		edit.addActionListener(this);
 		run.addActionListener(this);
 		vis.addActionListener(this);
+		comparar.addActionListener(this);
 
 		middle.add(bot, BorderLayout.SOUTH);
 
 		frame2.setContentPane(middle);
 		frame2.setVisible(true);
-		frame2.setSize(500, 200);
+		frame2.setSize(700, 300);
 		frame2.setLocationRelativeTo(null);
 		frame2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		regrabase = new Regras("is_long_method", 80, 0, 10, 0);
 		regrabase2 = new Regras("is_feature_envy", 0, 4, 0, -.42);
 		first.add(regrabase);
-		second.add(regrabase2);
+		first.add(regrabase2);
 		if (delRegraBase) {
 			regraslist.addAll(first);
 			guiUpdate(regraslist);
 
 		}
-		if (delRegraBase2) {
-			regraslist.addAll(second);
-			guiUpdate(regraslist);
 
-		}
 		first.clear();
-		second.clear();
 
 		delRegraBase = false;
 

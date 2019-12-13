@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -91,7 +92,7 @@ public class Gui implements ActionListener {
 				fileC.setCurrentDirectory(new java.io.File("."));
 				fileC.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fileC.showOpenDialog(frame);
-				Worker w = new Worker();
+				Worker w = new Worker(this);
 				File file = fileC.getSelectedFile();
 				try {
 					String[][] temp = w.createCols(file);
@@ -107,7 +108,7 @@ public class Gui implements ActionListener {
 				gui2();
 			} else if (e.getActionCommand().equals("Correr")) {
 				if (list.getSelectedIndex() != -1) {
-					Worker w = new Worker();
+					Worker w = new Worker(this);
 					String[][] temp = w.adicionaRegra(regraslist.get(list.getSelectedIndex()), sheet);
 					sheet = temp;
 					String[] topRow = temp[0];
@@ -135,6 +136,7 @@ public class Gui implements ActionListener {
 			}
 
 		} catch (IllegalArgumentException e2) {
+			e2.printStackTrace();
 		}
 
 	}
@@ -211,6 +213,11 @@ public class Gui implements ActionListener {
 		
 	
 
+	}
+	
+	public void batata(int a) {
+		JOptionPane.showMessageDialog(frame, "numero de erros = " + a);
+		
 	}
 
 }

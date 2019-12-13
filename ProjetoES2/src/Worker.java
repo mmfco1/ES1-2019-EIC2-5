@@ -12,6 +12,7 @@ public class Worker {
 
 	private XSSFWorkbook wb;
 	private XSSFSheet sheet;
+	private Gui gui;
 
 //	private final int ROW_LENGTH = 12;
 	public enum RuleType {
@@ -22,8 +23,8 @@ public class Worker {
 		LOC, CYCLO, ATFD, LAA
 	};
 
-	public Worker() {
-
+	public Worker(Gui gui) {
+		this.gui = gui;
 	}
 
 	public String[][] createCols(File file) throws InvalidFormatException, IOException {
@@ -48,19 +49,19 @@ public class Worker {
 		return cols;
 	}
 
-	public boolean testar(int a, int b) {
+	public boolean testar(double a, double b) {
 		boolean bool = true;
 		if (b < 0) {
 			b = b * (-1);
 			return a < b;
-		}
-		if (b > 0)
+		} else if (b > 0)
 			return a > b;
-
-		return bool;
+		else
+			return bool;
 	}
 
 	public String[][] adicionaRegra(Regras regra, String[][] sheet) {
+		String[][] batata = sheet;
 		int lastsheetCol = sheet[0].length;
 		int lastCol = lastsheetCol + 1;
 
@@ -69,33 +70,38 @@ public class Worker {
 		int loc = regra.getLoc();
 		int cyclo = regra.getCyclos();
 		int atfd = regra.getAftd();
-		int laa = regra.getLaa();
-
-//		for(int i = 0; i < sheet.length; i++)
-//			for(int j = 0; j < lastCol; j++)
-//				temp[i][j] = sheet[i][j];
+		double laa = regra.getLaa();
+		int erros = 0;
 
 		for (int i = 0; i < sheet.length; i++) {
+
 			for (int j = 0; j < lastCol; j++) {
+				if (i == 14 && j == 12) {
+					System.out.println("TAKE COVER");
+				}
 				if (j < lastsheetCol) {
-					//SE DESCOMENTAR ESTA LINHA JA NÃO FUNCIONA
-//					temp[i][j] = sheet[i][j];
+					// SE DESCOMENTAR ESTA LINHA JA NÃO FUNCIONA
+					temp[i][j] = sheet[i][j];
 				} else {
 					if (i == 0) {
 						temp[i][lastsheetCol] = regra.getNome();
 					} else {
 						if (testar(Integer.parseInt(sheet[i][4]), loc) && testar(Integer.parseInt(sheet[i][5]), cyclo)
 								&& testar(Integer.parseInt(sheet[i][6]), atfd)
-								&& testar(Integer.parseInt(sheet[i][7]), laa)) {
+								&& testar(Double.parseDouble(sheet[i][7]), laa))
 							temp[i][lastsheetCol] = "TRUE";
-						} else {
+
+						else {
 							temp[i][lastsheetCol] = "FALSE";
+							erros++;
 						}
 					}
 				}
+				System.out.println(i + " " + j);
 			}
-		}
 
+		}
+		gui.batata(erros);
 		return temp;
 	}
 

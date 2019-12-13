@@ -5,9 +5,9 @@ public class Regras {
 	private int Loc;
 	private int Aftd;
 	private int Cyclos;
-	private int Laa;
+	private double Laa;
 
-	public Regras(String nome, int loc, int aftd, int cyclos, int laa) {
+	public Regras(String nome, int loc, int aftd, int cyclos, double laa) {
 		super();
 		this.nome = nome;
 		Loc = loc;
@@ -32,7 +32,7 @@ public class Regras {
 		return Cyclos;
 	}
 
-	public int getLaa() {
+	public double getLaa() {
 		return Laa;
 	}
 

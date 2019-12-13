@@ -29,8 +29,8 @@ public class Gui implements ActionListener {
 	private ArrayList<Regras> regraslist = new ArrayList<Regras>();
 	private DefaultListModel<String> dl = new DefaultListModel<String>();
 	private JButton choose, thresholds, edit, run, del, vis;
-	private Regras regrabase;
-	private boolean delRegraBase = true;
+	private Regras regrabase, regrabase2;
+	private boolean delRegraBase = true, delRegraBase2 = true;
 	private String[][] cols;
 	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
 			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
@@ -40,7 +40,7 @@ public class Gui implements ActionListener {
 	 * criacao do gui Francisco Veiga
 	 */
 	private void gui() {
-		frame = new JFrame("Exel");
+		frame = new JFrame("Excel");
 		JPanel mainP = new JPanel();
 		JPanel middleP = new JPanel();
 		JPanel bottomP = new JPanel();
@@ -108,13 +108,17 @@ public class Gui implements ActionListener {
 				gui2();
 			} else if (e.getActionCommand().equals("Correr")) {
 				if (list.getSelectedIndex() != -1) {
-					Worker w = new Worker(this);
-					String[][] temp = w.adicionaRegra(regraslist.get(list.getSelectedIndex()), sheet);
-					sheet = temp;
-					String[] topRow = temp[0];
-					DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
-					table.setModel(dtm);
-					frame2.dispose();
+					if (sheet == null) {
+						JOptionPane.showMessageDialog(frame2, "Nao foi selecionado o excel");
+					} else {
+						Worker w = new Worker(this);
+						String[][] temp = w.adicionaRegra(regraslist.get(list.getSelectedIndex()), sheet);
+						sheet = temp;
+						String[] topRow = temp[0];
+						DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
+						table.setModel(dtm);
+						frame2.dispose();
+					}
 				}
 			} else if (e.getActionCommand().equals("Criar")) {
 				GUIregras gr = new GUIregras(this);
@@ -123,16 +127,17 @@ public class Gui implements ActionListener {
 				if (list.getSelectedIndex() != -1) {
 					if (regraslist.get(list.getSelectedIndex()).equals(regrabase)) {
 						delRegraBase = false;
+					} else if (regraslist.get(list.getSelectedIndex()).equals(regrabase2)) {
+						delRegraBase2 = false;
 					}
-					
+
 					regraslist.remove(list.getSelectedIndex());
 					guiUpdate(regraslist);
-					
-					
+
 				}
 			} else if (e.getActionCommand().equals("Visualizar")) {
 				GUIregras gr = new GUIregras(regraslist.get(list.getSelectedIndex()));
-				
+
 			}
 
 		} catch (IllegalArgumentException e2) {
@@ -140,10 +145,6 @@ public class Gui implements ActionListener {
 		}
 
 	}
-	
-	
-	
-	
 
 	public void setRegraslist(ArrayList<Regras> regraslist) {
 		this.regraslist.addAll(regraslist);
@@ -161,8 +162,9 @@ public class Gui implements ActionListener {
 	 * 2 gui Francisco Veiga
 	 */
 	private void gui2() {
-		
+
 		ArrayList<Regras> first = new ArrayList<Regras>();
+		ArrayList<Regras> second = new ArrayList<Regras>();
 		frame2 = new JFrame("Thresholds");
 
 		list = new JList<String>();
@@ -198,26 +200,31 @@ public class Gui implements ActionListener {
 		frame2.setSize(500, 200);
 		frame2.setLocationRelativeTo(null);
 		frame2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		
-		regrabase = new Regras("Regra Base", 80, 0, 10, 0);
+
+		regrabase = new Regras("is_long_method", 80, 0, 10, 0);
+		regrabase2 = new Regras("is_feature_envy", 0, 4, 0, -.42);
 		first.add(regrabase);
+		second.add(regrabase2);
 		if (delRegraBase) {
 			regraslist.addAll(first);
 			guiUpdate(regraslist);
-			
+
+		}
+		if (delRegraBase2) {
+			regraslist.addAll(second);
+			guiUpdate(regraslist);
+
 		}
 		first.clear();
-		
-		delRegraBase=false;
-		
-		
-	
+		second.clear();
+
+		delRegraBase = false;
 
 	}
-	
+
 	public void batata(int a) {
 		JOptionPane.showMessageDialog(frame, "numero de erros = " + a);
-		
+
 	}
 
 }

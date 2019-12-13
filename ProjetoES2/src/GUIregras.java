@@ -1,8 +1,12 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
@@ -12,7 +16,10 @@ public class GUIregras implements ActionListener {
 	private JFrame frame;
 	private JToggleButton LOC, Cyclo, ATFD, LAA;
 	private JButton OK;
-	private String nome;
+	private ArrayList<Regras> list = new ArrayList<Regras>();
+	private Gui gui;
+	private JTextField ntf, maiorLOCTF, maiorCYCLOTF, maiorATFDTF, maiorLAATF, menorLOCTF, menorCYCLOTF, menorATFDTF,
+			menorLAATF;
 
 	private void guiRegras() {
 		frame = new JFrame();
@@ -29,19 +36,19 @@ public class GUIregras implements ActionListener {
 
 		JLabel name = new JLabel("Nome da regra");
 
-		JTextField tf = new JTextField("");
+		ntf = new JTextField("");
 
-		JTextField maiorLOCTF = new JTextField("");
-		JTextField maiorCYCLOTF = new JTextField("");
-		JTextField maiorATFDTF = new JTextField("");
-		JTextField maiorLAATF = new JTextField("");
+		maiorLOCTF = new JTextField("");
+		maiorCYCLOTF = new JTextField("");
+		maiorATFDTF = new JTextField("");
+		maiorLAATF = new JTextField("");
 
-		JTextField menorLOCTF = new JTextField("");
-		JTextField menorCYCLOTF = new JTextField("");
-		JTextField menorATFDTF = new JTextField("");
-		JTextField menorLAATF = new JTextField("");
+		menorLOCTF = new JTextField("");
+		menorCYCLOTF = new JTextField("");
+		menorATFDTF = new JTextField("");
+		menorLAATF = new JTextField("");
 
-		tf.setBounds(10, 35, 150, 30);
+		ntf.setBounds(10, 35, 150, 30);
 
 		LOC = new JToggleButton("LOC");
 		Cyclo = new JToggleButton("Cyclo");
@@ -83,10 +90,9 @@ public class GUIregras implements ActionListener {
 		frame.add(LAA);
 		frame.add(OK);
 
-		
 		OK.addActionListener(this);
 
-		frame.add(tf);
+		frame.add(ntf);
 		// adding the jlabels to frame
 		frame.add(name);
 		frame.add(maiorLOC);
@@ -116,26 +122,83 @@ public class GUIregras implements ActionListener {
 
 	}
 
-	public GUIregras() {
+	public GUIregras(Gui gui) {
 		guiRegras();
+		this.gui = gui;
+	}
+	
+	public GUIregras(Regras r) {
+		ver(r);
+	}
+	
+
+	private void ver(Regras r) {
+		JOptionPane.showMessageDialog(frame, r.toString());
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getActionCommand());
-		if (e.getActionCommand().equals("OK")) {
-			if (Cyclo.isSelected()) {
+		list.clear();
+		int c = 0, a = 0, la = 0, lo = 0;
+		try {
+			if (e.getActionCommand().equals("OK")) {
+				if (Cyclo.isSelected()) {
+					if (!maiorCYCLOTF.getText().equals("")) {
+						System.out.println("here");
+						c = Integer.parseInt(maiorCYCLOTF.getText());
 
-			} else if (ATFD.isSelected()) {
+					} else if (!menorCYCLOTF.getText().equals("")) {
+						c = Integer.parseInt(menorCYCLOTF.getText());
+						c = c * (-1);
 
-			} else if (LAA.isSelected()) {
+					}
+				}
+				if (ATFD.isSelected()) {
+					if (!maiorATFDTF.getText().equals("")) {
+						a = Integer.parseInt(maiorATFDTF.getText());
+					} else if (!menorATFDTF.getText().equals("")) {
+						a = Integer.parseInt(menorATFDTF.getText());
+						a = a * (-1);
+					}
 
-			} else if (LOC.isSelected()) {
+				}
+				if (LAA.isSelected()) {
+					if (!maiorLAATF.getText().equals("")) {
+						la = Integer.parseInt(maiorLAATF.getText());
+					} else if (!menorLAATF.getText().equals("")) {
+						la = Integer.parseInt(menorLAATF.getText());
+						la = la * (-1);
+					}
+				}
+				if (LOC.isSelected()) {
+					if (!maiorLOCTF.getText().equals("")) {
+						lo = Integer.parseInt(maiorLOCTF.getText());
+					} else if (!menorLOCTF.getText().equals("")) {
+						lo = Integer.parseInt(menorLOCTF.getText());
+						lo = lo * (-1);
+					}
+				}
+				if (ntf.getText().equals("")) {
+					throw new Exception();
+				}
+				
+				// Cria a regra, se lo,a,c,la que sao respetivamente LOO ATFD CYCLOS LAA for negativo significa que é menor 
+				// do q o numero, se for positivo é maior do que o numero, se for 0 nao ha regra;
+				
+				if (lo==0 && a==0 && c==0 && la==0 ) {
+					throw new Exception();
+				}
+				Regras regra = new Regras(ntf.getText(), lo, a, c, la);
 
+				list.add(regra);
+
+				gui.setRegraslist(list);
+				frame.dispose();
 			}
-
+		} catch (Exception ee) {
+			JOptionPane.showMessageDialog(frame, "Input Errado");
 		}
-
 	}
 
 }

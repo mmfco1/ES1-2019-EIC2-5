@@ -1,4 +1,5 @@
 package main;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -22,6 +23,10 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
 public class Gui implements ActionListener {
+	/**
+	 * @author Francisco Veiga,Afonso Belard
+	 * 
+	 */
 
 	private JFrame frame, frame2;
 	private JTable table;
@@ -37,8 +42,9 @@ public class Gui implements ActionListener {
 			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
 	private String[][] sheet;
 
-	/*
-	 * criacao do gui Francisco Veiga
+	
+	/**
+	 * Criaçao do gui
 	 */
 	private void gui() {
 		frame = new JFrame("Excel");
@@ -79,8 +85,8 @@ public class Gui implements ActionListener {
 		gui();
 	}
 
-	/*
-	 * acoes dos buttoes Francisco, Afonso
+	/**
+	 * ações dos botões
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -120,7 +126,7 @@ public class Gui implements ActionListener {
 						DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
 						table.setModel(dtm);
 						frame2.dispose();
-						
+
 					}
 				}
 			} else if (e.getActionCommand().equals("Criar")) {
@@ -157,10 +163,22 @@ public class Gui implements ActionListener {
 
 	}
 
+	/**
+	 * adicionar regras a lista
+	 * 
+	 * @param regraslist
+	 */
+
 	public void setRegraslist(ArrayList<Regras> regraslist) {
 		this.regraslist.addAll(regraslist);
 		guiUpdate(this.regraslist);
 	}
+
+	/**
+	 * Update da lista no gui
+	 * 
+	 * @param regraslist
+	 */
 
 	private void guiUpdate(ArrayList<Regras> regraslist) {
 		dl.clear();
@@ -169,8 +187,9 @@ public class Gui implements ActionListener {
 		}
 	}
 
-	/*
-	 * 2 gui Francisco Veiga
+	/**
+	 * Criaçao do gui suplementar
+	 * 
 	 */
 	private void gui2() {
 
@@ -235,6 +254,11 @@ public class Gui implements ActionListener {
 
 	}
 
+	/**
+	 * Mostrar os erros
+	 * 
+	 * @param a
+	 */
 	public void batata(int a) {
 		JOptionPane.showMessageDialog(frame, "numero de erros = " + a);
 

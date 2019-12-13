@@ -10,17 +10,29 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class Worker {
+	/**@author Afonso Belard
+	 * 
+	 */
 
 	private XSSFWorkbook wb;
 	private XSSFSheet sheet;
 	private Gui gui;
 
 
-
+	/**
+	 * Construtor
+	 * @param gui
+	 */
 	public Worker(Gui gui) {
 		this.gui = gui;
 	}
-
+	/**
+	 * Ler o ficheiro de ecxel
+	 * @param file
+	 * @return cols
+	 * @throws InvalidFormatException
+	 * @throws IOException
+	 */
 	public String[][] createCols(File file) throws InvalidFormatException, IOException {
 		wb = new XSSFWorkbook(file);
 		sheet = wb.getSheetAt(0);
@@ -42,7 +54,13 @@ public class Worker {
 		}
 		return cols;
 	}
-
+	
+	/**
+	 * Verificar true or false
+	 * @param a
+	 * @param b
+	 * @return a,b,bool
+	 */
 	public boolean testar(double a, double b) {
 		boolean bool = true;
 		if (b < 0) {
@@ -53,7 +71,12 @@ public class Worker {
 		else
 			return bool;
 	}
-
+	/**
+	 * adiçao de regras ao programa
+	 * @param regra
+	 * @param sheet
+	 * @return temp
+	 */
 	public String[][] adicionaRegra(Regras regra, String[][] sheet) {
 		String[][] batata = sheet;
 		int lastsheetCol = sheet[0].length;

@@ -1,6 +1,8 @@
 package main;
 public class Client {
-	
+	/** @author Francisco Veiga
+	 * 
+	 */
 	public Client() {
 		run();
 	}

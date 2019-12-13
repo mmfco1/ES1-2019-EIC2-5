@@ -119,7 +119,7 @@ public class Gui implements ActionListener {
 					}
 					
 					regraslist.remove(list.getSelectedIndex());
-					
+					//batata
 					guiUpdate(regraslist);
 					
 					

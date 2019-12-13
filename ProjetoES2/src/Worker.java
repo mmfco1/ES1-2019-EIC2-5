@@ -80,7 +80,6 @@ public class Worker {
 					System.out.println("TAKE COVER");
 				}
 				if (j < lastsheetCol) {
-					// SE DESCOMENTAR ESTA LINHA JA NÃO FUNCIONA
 					temp[i][j] = sheet[i][j];
 				} else {
 					if (i == 0) {
@@ -103,6 +102,65 @@ public class Worker {
 		}
 		gui.batata(erros);
 		return temp;
+	}
+
+	public String[][] editarRegra(Regras regra, String[][] sheet) {
+
+		String[][] temp = new String[sheet.length][sheet[0].length];
+
+		int loc = regra.getLoc();
+		int cyclo = regra.getCyclos();
+		int atfd = regra.getAftd();
+		double laa = regra.getLaa();
+		int erros = 0;
+		int colDaRegra = 0;
+		
+		if (regra.getNome().equals("is_long_method"))
+			colDaRegra = 8;
+		if (regra.getNome().equals("is_feature_envy"))
+			colDaRegra = 11;
+
+		for (int i = 0; i < sheet.length; i++) {
+			for (int j = 0; j < sheet[0].length; j++) {
+				if (!(j == colDaRegra)) {
+					temp[i][j] = sheet[i][j];
+				} else {
+					if (i == 0) {
+						temp[i][colDaRegra] = regra.getNome();
+					} else {
+						if (testar(Integer.parseInt(sheet[i][4]), loc) && testar(Integer.parseInt(sheet[i][5]), cyclo)
+								&& testar(Integer.parseInt(sheet[i][6]), atfd)
+								&& testar(Double.parseDouble(sheet[i][7]), laa))
+							temp[i][colDaRegra] = "TRUE";
+
+						else {
+							temp[i][colDaRegra] = "FALSE";
+							erros++;
+						}
+					}
+				}
+
+			}
+
+		}
+		gui.batata(erros);
+		return temp;
+	}
+	
+	public void detecaoDefeitos(String[][] sheet, int a) {
+		int dci = 0, dii = 0, adci = 0, adii = 0;
+		for(int i = 0; i < sheet.length; i++) {
+			if(sheet[i][a].equals("TRUE") && sheet[i][8].equals("TRUE")) {
+				dci++;
+			} else if (sheet[i][a].equals("TRUE") && sheet[i][8].equals("FALSE")) {
+				dii++;
+			} else if (sheet[i][a].equals("FALSE") && sheet[i][8].equals("FALSE")) {
+				adci++;
+			} else {
+				adii++;
+			}
+		}
+		
 	}
 
 }

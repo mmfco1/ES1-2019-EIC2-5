@@ -14,6 +14,10 @@ import javax.swing.WindowConstants;
 
 public class GUIregras implements ActionListener {
 
+	/**
+	 * @author Francisco Veiga, Manuel Fava , Afonso Belard
+	 */
+	
 	private JFrame frame;
 	private JToggleButton LOC, Cyclo, ATFD, LAA;
 	private JButton OK;
@@ -21,7 +25,11 @@ public class GUIregras implements ActionListener {
 	private Gui gui;
 	private JTextField ntf, maiorLOCTF, maiorCYCLOTF, maiorATFDTF, maiorLAATF, menorLOCTF, menorCYCLOTF, menorATFDTF,
 			menorLAATF;
+	
 
+	/**
+	 * criaçao do gui suplementar
+	 */
 	private void guiRegras() {
 		frame = new JFrame();
 
@@ -123,21 +131,35 @@ public class GUIregras implements ActionListener {
 
 	}
 
+	/**
+	 * Construtor
+	 * @param gui
+	 */
 	public GUIregras(Gui gui) {
 		guiRegras();
 		this.gui = gui;
 	}
 	
+	/**
+	 * Construtor
+	 * @param r
+	 */
 	public GUIregras(Regras r) {
 		ver(r);
 	}
 	
-
+	/**
+	 * impressao da regra
+	 * @param r
+	 */
 	private void ver(Regras r) {
 		JOptionPane.showMessageDialog(frame, r.toString());
 		
 	}
-
+	
+	/**
+	 * acçoes dos butoes
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		list.clear();

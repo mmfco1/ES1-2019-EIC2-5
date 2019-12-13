@@ -1,6 +1,9 @@
 package main;
 
 public class Regras {
+	/**@author Francisco Veiga
+	 * 
+	 */
 
 	private String nome;
 	private int Loc;
@@ -8,6 +11,14 @@ public class Regras {
 	private int Cyclos;
 	private double Laa;
 
+	/**
+	 * Construtor
+	 * @param nome
+	 * @param loc
+	 * @param aftd
+	 * @param cyclos
+	 * @param laa
+	 */
 	public Regras(String nome, int loc, int aftd, int cyclos, double laa) {
 		super();
 		this.nome = nome;
@@ -17,26 +28,45 @@ public class Regras {
 		Laa = laa;
 	}
 
+	/**
+	 * getter do nome
+	 * @return nome
+	 */
 	public String getNome() {
 		return nome;
 	}
-
+	/**
+	 * getter do Loc
+	 * @return Loc
+	 */
+	
 	public int getLoc() {
 		return Loc;
 	}
-
+	/**
+	 * getter do aftd
+	 * @return Aftd
+	 */
 	public int getAftd() {
 		return Aftd;
 	}
-
+	/**
+	 * getter do cyclos
+	 * @return Cyclos
+	 */
 	public int getCyclos() {
 		return Cyclos;
 	}
-
+	/**
+	 * getter do laa
+	 * @return Laa
+	 */
 	public double getLaa() {
 		return Laa;
 	}
-
+	/**
+	 * Impressao da informaçao
+	 */
 	@Override
 	public String toString() {
 		String loc = new String(), laa = new String(), cyc = new String(), atfd = new String();

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GuiTest.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (13-Dec-2019 22:19:48)</a> &gt; <a href="../../index.html" class="el_group">ProjetoES2</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main.tests</a> &gt; <span class="el_source">GuiTest.java</span></div><h1>GuiTest.java</h1><pre class="source lang-java linenums">package main.tests;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+
+import org.junit.jupiter.api.Test;
+
+import main.Gui;
+import main.Regras;
+
+<span class="fc" id="L13">class GuiTest {</span>
+
+	@Test
+	void test() {
+<span class="fc" id="L17">		ActionEvent e = new ActionEvent(this, 0, &quot;Choose&quot;);</span>
+<span class="fc" id="L18">		ActionEvent e1 = new ActionEvent(this, 0, &quot;Tresholds&quot;);</span>
+<span class="fc" id="L19">		ActionEvent e2 = new ActionEvent(this, 0, &quot;Correr&quot;);</span>
+<span class="fc" id="L20">		ActionEvent e3 = new ActionEvent(this, 0, &quot;Criar&quot;);</span>
+<span class="fc" id="L21">		ActionEvent e4 = new ActionEvent(this, 0, &quot;Delete&quot;);</span>
+<span class="fc" id="L22">		ActionEvent e5 = new ActionEvent(this, 0, &quot;Visualizar&quot;);</span>
+<span class="fc" id="L23">		ActionEvent e6 = new ActionEvent(this, 0, &quot;Editar&quot;);</span>
+<span class="fc" id="L24">		ActionEvent e7 = new ActionEvent(this, 0, &quot;Comparar&quot;);</span>
+		
+		
+<span class="fc" id="L27">		ArrayList&lt;Regras&gt; test = new ArrayList&lt;Regras&gt;();</span>
+		
+<span class="fc" id="L29">		Gui g = new Gui();</span>
+		
+<span class="fc" id="L31">		g.actionPerformed(e1);</span>
+<span class="fc" id="L32">		g.actionPerformed(e2);</span>
+<span class="fc" id="L33">		g.actionPerformed(e3);</span>
+<span class="fc" id="L34">		g.actionPerformed(e4);</span>
+<span class="fc" id="L35">		g.actionPerformed(e5);</span>
+<span class="fc" id="L36">		g.actionPerformed(e6);</span>
+<span class="fc" id="L37">		g.actionPerformed(e7);</span>
+<span class="fc" id="L38">		g.batata(0);</span>
+<span class="fc" id="L39">		g.setRegraslist(test);</span>
+		
+		
+		
+		
+		
+<span class="fc" id="L45">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>AllTests (13-Dec-2019 22:19:48)</div></body></html>

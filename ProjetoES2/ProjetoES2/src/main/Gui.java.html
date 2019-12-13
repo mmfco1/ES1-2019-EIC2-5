@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Gui.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (13-Dec-2019 22:19:48)</a> &gt; <a href="../../index.html" class="el_group">ProjetoES2</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main</a> &gt; <span class="el_source">Gui.java</span></div><h1>Gui.java</h1><pre class="source lang-java linenums">package main;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.EncryptedDocumentException;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+
+public class Gui implements ActionListener {
+
+	private JFrame frame, frame2;
+	private JTable table;
+	private JScrollPane sp;
+	private JList&lt;String&gt; list;
+<span class="fc" id="L30">	private ArrayList&lt;Regras&gt; regraslist = new ArrayList&lt;Regras&gt;();</span>
+<span class="fc" id="L31">	private DefaultListModel&lt;String&gt; dl = new DefaultListModel&lt;String&gt;();</span>
+	private JButton choose, thresholds, criar, comparar, edit, run, del, vis;
+	private Regras regrabase, regrabase2;
+<span class="fc" id="L34">	private boolean delRegraBase = true, delRegraBase2 = true;</span>
+	private String[][] cols;
+<span class="fc" id="L36">	private final String[] ROWS = { &quot;MethodID&quot;, &quot;Package&quot;, &quot;Class&quot;, &quot;Method&quot;, &quot;LOC&quot;, &quot;CYCLO&quot;, &quot;ATFD&quot;, &quot;LAA&quot;,</span>
+<span class="fc" id="L37">			&quot;is_long_method&quot;, &quot;iPlasma&quot;, &quot;PMD&quot;, &quot;is_feature_envy&quot; };</span>
+	private String[][] sheet;
+
+	/*
+	 * criacao do gui Francisco Veiga
+	 */
+	private void gui() {
+<span class="fc" id="L44">		frame = new JFrame(&quot;Excel&quot;);</span>
+<span class="fc" id="L45">		JPanel mainP = new JPanel();</span>
+<span class="fc" id="L46">		JPanel middleP = new JPanel();</span>
+<span class="fc" id="L47">		JPanel bottomP = new JPanel();</span>
+<span class="fc" id="L48">		table = new JTable();</span>
+<span class="fc" id="L49">		DefaultTableModel dtm = new DefaultTableModel(cols, ROWS);</span>
+<span class="fc" id="L50">		table.setModel(dtm);</span>
+<span class="fc" id="L51">		JScrollPane scrollP = new JScrollPane(table);</span>
+<span class="fc" id="L52">		choose = new JButton(&quot;Choose&quot;);</span>
+<span class="fc" id="L53">		thresholds = new JButton(&quot;Tresholds&quot;);</span>
+
+<span class="fc" id="L55">		mainP.setLayout(new BorderLayout());</span>
+<span class="fc" id="L56">		middleP.setLayout(new BorderLayout());</span>
+<span class="fc" id="L57">		bottomP.setLayout(new GridLayout(1, 2));</span>
+
+<span class="fc" id="L59">		scrollP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);</span>
+
+<span class="fc" id="L61">		mainP.add(middleP, BorderLayout.CENTER);</span>
+<span class="fc" id="L62">		mainP.add(bottomP, BorderLayout.SOUTH);</span>
+<span class="fc" id="L63">		bottomP.add(choose, BorderLayout.EAST);</span>
+<span class="fc" id="L64">		bottomP.add(thresholds, BorderLayout.WEST);</span>
+
+<span class="fc" id="L66">		middleP.add(scrollP, BorderLayout.CENTER);</span>
+
+<span class="fc" id="L68">		choose.addActionListener(this);</span>
+<span class="fc" id="L69">		thresholds.addActionListener(this);</span>
+
+<span class="fc" id="L71">		frame.setSize(1500, 600);</span>
+<span class="fc" id="L72">		frame.setContentPane(mainP);</span>
+<span class="fc" id="L73">		frame.setLocationRelativeTo(null);</span>
+<span class="fc" id="L74">		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);</span>
+<span class="fc" id="L75">		frame.setVisible(true);</span>
+<span class="fc" id="L76">	}</span>
+
+<span class="fc" id="L78">	public Gui() {</span>
+<span class="fc" id="L79">		gui();</span>
+<span class="fc" id="L80">	}</span>
+
+	/*
+	 * acoes dos buttoes Francisco, Afonso
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		try {
+
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">			if (e.getActionCommand().equals(&quot;Choose&quot;)) {</span>
+
+<span class="nc" id="L91">				JFileChooser fileC = new JFileChooser();</span>
+
+<span class="nc" id="L93">				fileC.setCurrentDirectory(new java.io.File(&quot;.&quot;));</span>
+<span class="nc" id="L94">				fileC.setFileSelectionMode(JFileChooser.FILES_ONLY);</span>
+<span class="nc" id="L95">				fileC.showOpenDialog(frame);</span>
+<span class="nc" id="L96">				Worker w = new Worker(this);</span>
+<span class="nc" id="L97">				System.out.println(fileC.getSelectedFile().getAbsolutePath());</span>
+<span class="nc" id="L98">				File file = fileC.getSelectedFile();</span>
+				try {
+<span class="nc" id="L100">					String[][] temp = w.createCols(file);</span>
+<span class="nc" id="L101">					sheet = temp;</span>
+<span class="nc" id="L102">					String[] topRow = temp[0];</span>
+<span class="nc" id="L103">					DefaultTableModel dtm = new DefaultTableModel(temp, topRow);</span>
+<span class="nc" id="L104">					table.setModel(dtm);</span>
+<span class="nc" id="L105">				} catch (EncryptedDocumentException | InvalidFormatException | IOException e1) {</span>
+<span class="nc" id="L106">					e1.printStackTrace();</span>
+				}
+
+<span class="pc bfc" id="L109" title="All 2 branches covered.">			} else if (e.getActionCommand().equals(&quot;Tresholds&quot;)) {</span>
+<span class="fc" id="L110">				gui2();</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">			} else if (e.getActionCommand().equals(&quot;Correr&quot;)) {</span>
+<span class="pc bpc" id="L112" title="1 of 2 branches missed.">				if (list.getSelectedIndex() != -1) {</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">					if (sheet == null) {</span>
+<span class="nc" id="L114">						JOptionPane.showMessageDialog(frame2, &quot;Nao foi selecionado o excel&quot;);</span>
+<span class="nc" id="L115">					} else {</span>
+<span class="nc" id="L116">						Worker w = new Worker(this);</span>
+<span class="nc" id="L117">						String[][] temp = w.adicionaRegra(regraslist.get(list.getSelectedIndex()), sheet);</span>
+<span class="nc" id="L118">						sheet = temp;</span>
+<span class="nc" id="L119">						String[] topRow = temp[0];</span>
+<span class="nc" id="L120">						DefaultTableModel dtm = new DefaultTableModel(temp, topRow);</span>
+<span class="nc" id="L121">						table.setModel(dtm);</span>
+<span class="nc" id="L122">						frame2.dispose();</span>
+						
+					}
+				}
+<span class="pc bfc" id="L126" title="All 2 branches covered.">			} else if (e.getActionCommand().equals(&quot;Criar&quot;)) {</span>
+<span class="fc" id="L127">				GUIregras gr = new GUIregras(this);</span>
+
+<span class="fc bfc" id="L129" title="All 2 branches covered.">			} else if (e.getActionCommand().equals(&quot;Delete&quot;)) {</span>
+<span class="pc bpc" id="L130" title="1 of 2 branches missed.">				if (list.getSelectedIndex() != -1) {</span>
+<span class="nc bnc" id="L131" title="All 2 branches missed.">					if (regraslist.get(list.getSelectedIndex()).equals(regrabase)</span>
+<span class="nc bnc" id="L132" title="All 2 branches missed.">							|| regraslist.get(list.getSelectedIndex()).equals(regrabase2)) {</span>
+<span class="nc" id="L133">						JOptionPane.showMessageDialog(frame2, &quot;Nao podes apagar as thresholds base&quot;);</span>
+<span class="nc" id="L134">					} else {</span>
+
+<span class="nc" id="L136">						regraslist.remove(list.getSelectedIndex());</span>
+<span class="nc" id="L137">						guiUpdate(regraslist);</span>
+					}
+				}
+<span class="pc bfc" id="L140" title="All 2 branches covered.">			} else if (e.getActionCommand().equals(&quot;Visualizar&quot;)) {</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">				if (list.getSelectedIndex() != -1) {</span>
+<span class="nc" id="L142">					GUIregras gr = new GUIregras(regraslist.get(list.getSelectedIndex()));</span>
+				}
+
+<span class="pc bfc" id="L145" title="All 2 branches covered.">			} else if (e.getActionCommand().equals(&quot;Editar&quot;)) {</span>
+
+<span class="pc bpc" id="L147" title="1 of 2 branches missed.">			} else if (e.getActionCommand().equals(&quot;Comparar&quot;)) {</span>
+<span class="fc" id="L148">				Object[] options = { &quot;IPlasma&quot;, &quot;PMD&quot; };</span>
+<span class="fc" id="L149">				int n = JOptionPane.showOptionDialog(frame2, &quot;Qual quer comparar ?&quot;, &quot;&quot;,</span>
+<span class="fc" id="L150">						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);</span>
+<span class="fc" id="L151">				System.out.println(n);</span>
+			}
+
+<span class="pc" id="L154">		} catch (IllegalArgumentException e2) {</span>
+<span class="nc" id="L155">			e2.printStackTrace();</span>
+		}
+
+<span class="fc" id="L158">	}</span>
+
+	public void setRegraslist(ArrayList&lt;Regras&gt; regraslist) {
+<span class="fc" id="L161">		this.regraslist.addAll(regraslist);</span>
+<span class="fc" id="L162">		guiUpdate(this.regraslist);</span>
+<span class="fc" id="L163">	}</span>
+
+	private void guiUpdate(ArrayList&lt;Regras&gt; regraslist) {
+<span class="fc" id="L166">		dl.clear();</span>
+<span class="fc bfc" id="L167" title="All 2 branches covered.">		for (Regras regras : regraslist) {</span>
+<span class="fc" id="L168">			dl.addElement(regras.getNome());</span>
+		}
+<span class="fc" id="L170">	}</span>
+
+	/*
+	 * 2 gui Francisco Veiga
+	 */
+	private void gui2() {
+
+<span class="fc" id="L177">		ArrayList&lt;Regras&gt; first = new ArrayList&lt;Regras&gt;();</span>
+
+<span class="fc" id="L179">		frame2 = new JFrame(&quot;Thresholds&quot;);</span>
+
+<span class="fc" id="L181">		list = new JList&lt;String&gt;();</span>
+<span class="fc" id="L182">		sp = new JScrollPane(list);</span>
+
+<span class="fc" id="L184">		criar = new JButton(&quot;Criar&quot;);</span>
+<span class="fc" id="L185">		run = new JButton(&quot;Correr&quot;);</span>
+<span class="fc" id="L186">		edit = new JButton(&quot;Editar&quot;);</span>
+<span class="fc" id="L187">		comparar = new JButton(&quot;Comparar&quot;);</span>
+<span class="fc" id="L188">		del = new JButton(&quot;Delete&quot;);</span>
+<span class="fc" id="L189">		vis = new JButton(&quot;Visualizar&quot;);</span>
+
+<span class="fc" id="L191">		JPanel middle = new JPanel();</span>
+<span class="fc" id="L192">		JPanel bot = new JPanel();</span>
+
+<span class="fc" id="L194">		middle.setLayout(new BorderLayout());</span>
+<span class="fc" id="L195">		bot.setLayout(new GridLayout(1, 4));</span>
+
+<span class="fc" id="L197">		list.setModel(dl);</span>
+<span class="fc" id="L198">		bot.add(criar);</span>
+<span class="fc" id="L199">		bot.add(vis);</span>
+<span class="fc" id="L200">		bot.add(comparar);</span>
+<span class="fc" id="L201">		bot.add(edit);</span>
+<span class="fc" id="L202">		bot.add(del);</span>
+<span class="fc" id="L203">		bot.add(run);</span>
+
+<span class="fc" id="L205">		middle.add(sp, BorderLayout.CENTER);</span>
+
+<span class="fc" id="L207">		criar.addActionListener(this);</span>
+<span class="fc" id="L208">		del.addActionListener(this);</span>
+<span class="fc" id="L209">		edit.addActionListener(this);</span>
+<span class="fc" id="L210">		run.addActionListener(this);</span>
+<span class="fc" id="L211">		vis.addActionListener(this);</span>
+<span class="fc" id="L212">		comparar.addActionListener(this);</span>
+
+<span class="fc" id="L214">		middle.add(bot, BorderLayout.SOUTH);</span>
+
+<span class="fc" id="L216">		frame2.setContentPane(middle);</span>
+<span class="fc" id="L217">		frame2.setVisible(true);</span>
+<span class="fc" id="L218">		frame2.setSize(700, 300);</span>
+<span class="fc" id="L219">		frame2.setLocationRelativeTo(null);</span>
+<span class="fc" id="L220">		frame2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);</span>
+
+<span class="fc" id="L222">		regrabase = new Regras(&quot;is_long_method&quot;, 80, 0, 10, 0);</span>
+<span class="fc" id="L223">		regrabase2 = new Regras(&quot;is_feature_envy&quot;, 0, 4, 0, -.42);</span>
+<span class="fc" id="L224">		first.add(regrabase);</span>
+<span class="fc" id="L225">		first.add(regrabase2);</span>
+<span class="pc bpc" id="L226" title="1 of 2 branches missed.">		if (delRegraBase) {</span>
+<span class="fc" id="L227">			regraslist.addAll(first);</span>
+<span class="fc" id="L228">			guiUpdate(regraslist);</span>
+
+		}
+
+<span class="fc" id="L232">		first.clear();</span>
+
+<span class="fc" id="L234">		delRegraBase = false;</span>
+
+<span class="fc" id="L236">	}</span>
+
+	public void batata(int a) {
+<span class="fc" id="L239">		JOptionPane.showMessageDialog(frame, &quot;numero de erros = &quot; + a);</span>
+
+<span class="fc" id="L241">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>AllTests (13-Dec-2019 22:19:48)</div></body></html>

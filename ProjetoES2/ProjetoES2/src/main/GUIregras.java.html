@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>GUIregras.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (13-Dec-2019 22:19:48)</a> &gt; <a href="../../index.html" class="el_group">ProjetoES2</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main</a> &gt; <span class="el_source">GUIregras.java</span></div><h1>GUIregras.java</h1><pre class="source lang-java linenums">package main;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.JToggleButton;
+import javax.swing.WindowConstants;
+
+public class GUIregras implements ActionListener {
+
+	private JFrame frame;
+	private JToggleButton LOC, Cyclo, ATFD, LAA;
+	private JButton OK;
+<span class="fc" id="L20">	private ArrayList&lt;Regras&gt; list = new ArrayList&lt;Regras&gt;();</span>
+	private Gui gui;
+	private JTextField ntf, maiorLOCTF, maiorCYCLOTF, maiorATFDTF, maiorLAATF, menorLOCTF, menorCYCLOTF, menorATFDTF,
+			menorLAATF;
+
+	private void guiRegras() {
+<span class="fc" id="L26">		frame = new JFrame();</span>
+
+<span class="fc" id="L28">		JLabel maiorLOC = new JLabel(&quot;Maior que: &quot;);</span>
+<span class="fc" id="L29">		JLabel maiorCYCLO = new JLabel(&quot;Maior que: &quot;);</span>
+<span class="fc" id="L30">		JLabel maiorATFD = new JLabel(&quot;Maior que: &quot;);</span>
+<span class="fc" id="L31">		JLabel maiorLAA = new JLabel(&quot;Maior que: &quot;);</span>
+
+<span class="fc" id="L33">		JLabel menorLOC = new JLabel(&quot;Menor que: &quot;);</span>
+<span class="fc" id="L34">		JLabel menorCYCLO = new JLabel(&quot;Menor que: &quot;);</span>
+<span class="fc" id="L35">		JLabel menorATFD = new JLabel(&quot;Menor que: &quot;);</span>
+<span class="fc" id="L36">		JLabel menorLAA = new JLabel(&quot;Menor que: &quot;);</span>
+
+<span class="fc" id="L38">		JLabel name = new JLabel(&quot;Nome da regra&quot;);</span>
+
+<span class="fc" id="L40">		ntf = new JTextField(&quot;&quot;);</span>
+
+<span class="fc" id="L42">		maiorLOCTF = new JTextField(&quot;&quot;);</span>
+<span class="fc" id="L43">		maiorCYCLOTF = new JTextField(&quot;&quot;);</span>
+<span class="fc" id="L44">		maiorATFDTF = new JTextField(&quot;&quot;);</span>
+<span class="fc" id="L45">		maiorLAATF = new JTextField(&quot;&quot;);</span>
+
+<span class="fc" id="L47">		menorLOCTF = new JTextField(&quot;&quot;);</span>
+<span class="fc" id="L48">		menorCYCLOTF = new JTextField(&quot;&quot;);</span>
+<span class="fc" id="L49">		menorATFDTF = new JTextField(&quot;&quot;);</span>
+<span class="fc" id="L50">		menorLAATF = new JTextField(&quot;&quot;);</span>
+
+<span class="fc" id="L52">		ntf.setBounds(10, 35, 150, 30);</span>
+
+<span class="fc" id="L54">		LOC = new JToggleButton(&quot;LOC&quot;);</span>
+<span class="fc" id="L55">		Cyclo = new JToggleButton(&quot;Cyclo&quot;);</span>
+<span class="fc" id="L56">		ATFD = new JToggleButton(&quot;ATFD&quot;);</span>
+<span class="fc" id="L57">		LAA = new JToggleButton(&quot;LAA&quot;);</span>
+<span class="fc" id="L58">		OK = new JButton(&quot;OK&quot;);</span>
+
+		// position of the jlabes
+<span class="fc" id="L61">		name.setBounds(10, 10, 150, 20);</span>
+<span class="fc" id="L62">		maiorLOC.setBounds(120, 70, 150, 20);</span>
+<span class="fc" id="L63">		maiorCYCLO.setBounds(120, 100, 150, 20);</span>
+<span class="fc" id="L64">		maiorATFD.setBounds(120, 130, 150, 20);</span>
+<span class="fc" id="L65">		maiorLAA.setBounds(120, 160, 150, 20);</span>
+<span class="fc" id="L66">		menorLOC.setBounds(300, 70, 150, 20);</span>
+<span class="fc" id="L67">		menorCYCLO.setBounds(300, 100, 150, 20);</span>
+<span class="fc" id="L68">		menorATFD.setBounds(300, 130, 150, 20);</span>
+<span class="fc" id="L69">		menorLAA.setBounds(300, 160, 150, 20);</span>
+
+		// position of the jtextfieds
+<span class="fc" id="L72">		maiorLOCTF.setBounds(220, 70, 50, 20);</span>
+<span class="fc" id="L73">		maiorCYCLOTF.setBounds(220, 100, 50, 20);</span>
+<span class="fc" id="L74">		maiorATFDTF.setBounds(220, 130, 50, 20);</span>
+<span class="fc" id="L75">		maiorLAATF.setBounds(220, 160, 50, 20);</span>
+<span class="fc" id="L76">		menorLOCTF.setBounds(400, 70, 50, 20);</span>
+<span class="fc" id="L77">		menorCYCLOTF.setBounds(400, 100, 50, 20);</span>
+<span class="fc" id="L78">		menorATFDTF.setBounds(400, 130, 50, 20);</span>
+<span class="fc" id="L79">		menorLAATF.setBounds(400, 160, 50, 20);</span>
+
+		// position of the jbutton / jtogglebutton
+<span class="fc" id="L82">		LOC.setBounds(10, 70, 95, 20);</span>
+<span class="fc" id="L83">		Cyclo.setBounds(10, 100, 95, 20);</span>
+<span class="fc" id="L84">		ATFD.setBounds(10, 130, 95, 20);</span>
+<span class="fc" id="L85">		LAA.setBounds(10, 160, 95, 20);</span>
+<span class="fc" id="L86">		OK.setBounds(190, 240, 90, 20);</span>
+
+<span class="fc" id="L88">		frame.add(LOC);</span>
+<span class="fc" id="L89">		frame.add(Cyclo);</span>
+<span class="fc" id="L90">		frame.add(ATFD);</span>
+<span class="fc" id="L91">		frame.add(LAA);</span>
+<span class="fc" id="L92">		frame.add(OK);</span>
+
+<span class="fc" id="L94">		OK.addActionListener(this);</span>
+
+<span class="fc" id="L96">		frame.add(ntf);</span>
+		// adding the jlabels to frame
+<span class="fc" id="L98">		frame.add(name);</span>
+<span class="fc" id="L99">		frame.add(maiorLOC);</span>
+<span class="fc" id="L100">		frame.add(maiorCYCLO);</span>
+<span class="fc" id="L101">		frame.add(maiorATFD);</span>
+<span class="fc" id="L102">		frame.add(maiorLAA);</span>
+<span class="fc" id="L103">		frame.add(menorLOC);</span>
+<span class="fc" id="L104">		frame.add(menorCYCLO);</span>
+<span class="fc" id="L105">		frame.add(menorATFD);</span>
+<span class="fc" id="L106">		frame.add(menorLAA);</span>
+
+		// adding the jtextareas to frame
+<span class="fc" id="L109">		frame.add(maiorLOCTF);</span>
+<span class="fc" id="L110">		frame.add(maiorCYCLOTF);</span>
+<span class="fc" id="L111">		frame.add(maiorATFDTF);</span>
+<span class="fc" id="L112">		frame.add(maiorLAATF);</span>
+<span class="fc" id="L113">		frame.add(menorLOCTF);</span>
+<span class="fc" id="L114">		frame.add(menorCYCLOTF);</span>
+<span class="fc" id="L115">		frame.add(menorATFDTF);</span>
+<span class="fc" id="L116">		frame.add(menorLAATF);</span>
+
+<span class="fc" id="L118">		frame.setLayout(null);</span>
+<span class="fc" id="L119">		frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);</span>
+<span class="fc" id="L120">		frame.setLocationRelativeTo(null);</span>
+<span class="fc" id="L121">		frame.setSize(500, 300);</span>
+<span class="fc" id="L122">		frame.setVisible(true);</span>
+
+<span class="fc" id="L124">	}</span>
+
+<span class="fc" id="L126">	public GUIregras(Gui gui) {</span>
+<span class="fc" id="L127">		guiRegras();</span>
+<span class="fc" id="L128">		this.gui = gui;</span>
+<span class="fc" id="L129">	}</span>
+	
+<span class="fc" id="L131">	public GUIregras(Regras r) {</span>
+<span class="fc" id="L132">		ver(r);</span>
+<span class="fc" id="L133">	}</span>
+	
+
+	private void ver(Regras r) {
+<span class="fc" id="L137">		JOptionPane.showMessageDialog(frame, r.toString());</span>
+		
+<span class="fc" id="L139">	}</span>
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+<span class="fc" id="L143">		list.clear();</span>
+<span class="fc" id="L144">		int c = 0, a = 0, la = 0, lo = 0;</span>
+		try {
+<span class="pc bpc" id="L146" title="1 of 2 branches missed.">			if (e.getActionCommand().equals(&quot;OK&quot;)) {</span>
+<span class="nc bnc" id="L147" title="All 2 branches missed.">				if (Cyclo.isSelected()) {</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">					if (!maiorCYCLOTF.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L149">						System.out.println(&quot;here&quot;);</span>
+<span class="nc" id="L150">						c = Integer.parseInt(maiorCYCLOTF.getText());</span>
+
+<span class="nc bnc" id="L152" title="All 2 branches missed.">					} else if (!menorCYCLOTF.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L153">						c = Integer.parseInt(menorCYCLOTF.getText());</span>
+<span class="nc" id="L154">						c = c * (-1);</span>
+
+					}
+				}
+<span class="nc bnc" id="L158" title="All 2 branches missed.">				if (ATFD.isSelected()) {</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">					if (!maiorATFDTF.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L160">						a = Integer.parseInt(maiorATFDTF.getText());</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">					} else if (!menorATFDTF.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L162">						a = Integer.parseInt(menorATFDTF.getText());</span>
+<span class="nc" id="L163">						a = a * (-1);</span>
+					}
+
+				}
+<span class="nc bnc" id="L167" title="All 2 branches missed.">				if (LAA.isSelected()) {</span>
+<span class="nc bnc" id="L168" title="All 2 branches missed.">					if (!maiorLAATF.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L169">						la = Integer.parseInt(maiorLAATF.getText());</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">					} else if (!menorLAATF.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L171">						la = Integer.parseInt(menorLAATF.getText());</span>
+<span class="nc" id="L172">						la = la * (-1);</span>
+					}
+				}
+<span class="nc bnc" id="L175" title="All 2 branches missed.">				if (LOC.isSelected()) {</span>
+<span class="nc bnc" id="L176" title="All 2 branches missed.">					if (!maiorLOCTF.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L177">						lo = Integer.parseInt(maiorLOCTF.getText());</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">					} else if (!menorLOCTF.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L179">						lo = Integer.parseInt(menorLOCTF.getText());</span>
+<span class="nc" id="L180">						lo = lo * (-1);</span>
+					}
+				}
+<span class="nc bnc" id="L183" title="All 2 branches missed.">				if (ntf.getText().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L184">					throw new Exception();</span>
+				}
+				
+				// Cria a regra, se lo,a,c,la que sao respetivamente LOO ATFD CYCLOS LAA for negativo significa que é menor 
+				// do q o numero, se for positivo é maior do que o numero, se for 0 nao ha regra;
+				
+<span class="nc bnc" id="L190" title="All 8 branches missed.">				if (lo==0 &amp;&amp; a==0 &amp;&amp; c==0 &amp;&amp; la==0 ) {</span>
+<span class="nc" id="L191">					throw new Exception();</span>
+				}
+<span class="nc" id="L193">				Regras regra = new Regras(ntf.getText(), lo, a, c, la);</span>
+
+<span class="nc" id="L195">				list.add(regra);</span>
+
+<span class="nc" id="L197">				gui.setRegraslist(list);</span>
+<span class="nc" id="L198">				frame.dispose();</span>
+			}
+<span class="nc" id="L200">		} catch (Exception ee) {</span>
+<span class="nc" id="L201">			JOptionPane.showMessageDialog(frame, &quot;Input Errado&quot;);</span>
+		}
+<span class="fc" id="L203">	}</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>AllTests (13-Dec-2019 22:19:48)</div></body></html>

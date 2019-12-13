@@ -114,7 +114,7 @@ public class Worker {
 		double laa = regra.getLaa();
 		int erros = 0;
 		int colDaRegra = 0;
-		
+
 		if (regra.getNome().equals("is_long_method"))
 			colDaRegra = 8;
 		if (regra.getNome().equals("is_feature_envy"))
@@ -146,11 +146,11 @@ public class Worker {
 		gui.batata(erros);
 		return temp;
 	}
-	
+
 	public void detecaoDefeitos(String[][] sheet, int a) {
 		int dci = 0, dii = 0, adci = 0, adii = 0;
-		for(int i = 0; i < sheet.length; i++) {
-			if(sheet[i][a].equals("TRUE") && sheet[i][8].equals("TRUE")) {
+		for (int i = 0; i < sheet.length; i++) {
+			if (sheet[i][a].equals("TRUE") && sheet[i][8].equals("TRUE")) {
 				dci++;
 			} else if (sheet[i][a].equals("TRUE") && sheet[i][8].equals("FALSE")) {
 				dii++;
@@ -160,7 +160,7 @@ public class Worker {
 				adii++;
 			}
 		}
-		
+
 	}
 
 }

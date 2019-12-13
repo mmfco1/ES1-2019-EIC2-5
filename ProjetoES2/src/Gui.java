@@ -33,6 +33,7 @@ public class Gui implements ActionListener {
 	private String[][] cols;
 	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
 			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
+	private String[][] sheet;
 
 	/*
 	 * criacao do gui Francisco Veiga
@@ -94,6 +95,7 @@ public class Gui implements ActionListener {
 				File file = fileC.getSelectedFile();
 				try {
 					String[][] temp = w.createCols(file);
+					sheet = temp;
 					String[] topRow = temp[0];
 					DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
 					table.setModel(dtm);
@@ -106,7 +108,7 @@ public class Gui implements ActionListener {
 			} else if (e.getActionCommand().equals("Correr")) {
 				if (list.getSelectedIndex() != -1) {
 					Worker w = new Worker();
-					w.adicionaRegra(regraslist.get(list.getSelectedIndex()));
+					w.adicionaRegra(regraslist.get(list.getSelectedIndex()), sheet);
 					frame2.dispose();
 				}
 			} else if (e.getActionCommand().equals("Criar")) {

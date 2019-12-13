@@ -48,46 +48,51 @@ public class Worker {
 		return cols;
 	}
 
-	public boolean testar(int a, int b, RuleType rt) {
-		boolean bool = false;
-		switch (rt) {
-		case BIGGER: bool = a > b; break;
-		case SMALLER: bool = a < b; break;
-		case EQUAL: bool = a == b; break;
-		}
+	public boolean testar(int a, int b) {
+		boolean bool = true;
+		if (b > 0)
+			bool = a > b;
+		if (b < 0)
+			bool = a < (b * (-1));
 		return bool;
 	}
 
-	public boolean[] checkMetric(String[][] sheet, Metric m, int a, RuleType rt) {
-		boolean[] bool = new boolean[sheet.length];
-		int col = 0;
-		switch (m) {
-		case LOC: col = 5; break;
-		case CYCLO: col = 6; break;
-		case ATFD: col = 7; break;
-		case LAA: col = 8; break;
-		}
-		for (int i = 0; i < sheet.length; i++) {
-			if (testar(Integer.valueOf(sheet[i][col]), a, rt)) {
-				bool[i] = true;
-			} else {
-				bool[i] = false;
+//	public boolean[] checkMetric(String[][] sheet, int a, int b) {
+//		boolean[] bool = new boolean[sheet.length];
+//
+//		for (int i = 0; i < sheet.length; i++) {
+//			if (testar(Integer.valueOf(sheet[i][a]), b)) {
+//				bool[i] = true;
+//			} else {
+//				bool[i] = false;
+//			}
+//		}
+//		return bool;
+//	}
+
+	public String[][] adicionaRegra(Regras regra, String[][] sheet) {
+		int lastCol = sheet[0].length;
+		String[][] temp = new String[sheet.length][lastCol + 1];
+		temp[0][lastCol] = regra.getNome();
+		int loc = regra.getLoc();
+		int cyclo = regra.getCyclos();
+		int atfd = regra.getAftd();
+		int laa = regra.getLaa();
+
+		for(int i = 1; i < sheet.length; i++) {
+			if(testar(Integer.parseInt(sheet[i][5]), loc) &&
+					testar(Integer.parseInt(sheet[i][6]), cyclo) &&
+					testar(Integer.parseInt(sheet[i][7]), atfd) &&
+					testar(Integer.parseInt(sheet[i][8]), laa)) {
+				temp[i][lastCol] = "TRUE";
+			}else {
+				temp[i][lastCol] = "FALSE";
 			}
 		}
-		return bool;
+		
+		return temp;
 	}
 
-	public String[][] applyRule(String[][] sheet){
-		
-		
-		return sheet;
-	}
+	
 
-	public void adicionaRegra(Regras regras) {
-		
-	}
-	
-	
-	
-	
 }

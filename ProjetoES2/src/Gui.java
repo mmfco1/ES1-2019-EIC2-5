@@ -108,7 +108,11 @@ public class Gui implements ActionListener {
 			} else if (e.getActionCommand().equals("Correr")) {
 				if (list.getSelectedIndex() != -1) {
 					Worker w = new Worker();
-					w.adicionaRegra(regraslist.get(list.getSelectedIndex()), sheet);
+					String[][] temp = w.adicionaRegra(regraslist.get(list.getSelectedIndex()), sheet);
+					sheet = temp;
+					String[] topRow = temp[0];
+					DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
+					table.setModel(dtm);
 					frame2.dispose();
 				}
 			} else if (e.getActionCommand().equals("Criar")) {

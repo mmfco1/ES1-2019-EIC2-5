@@ -82,6 +82,10 @@ public class Worker {
 		
 		return sheet;
 	}
+
+	public void adicionaRegra(Regras regras) {
+		
+	}
 	
 	
 	

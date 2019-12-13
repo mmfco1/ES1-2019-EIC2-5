@@ -105,8 +105,8 @@ public class Gui implements ActionListener {
 				gui2();
 			} else if (e.getActionCommand().equals("Correr")) {
 				if (list.getSelectedIndex() != -1) {
-					System.out.println("TesteAfonso");
-					regraslist.get(list.getSelectedIndex());
+					Worker w = new Worker();
+					w.adicionaRegra(regraslist.get(list.getSelectedIndex()));
 					frame2.dispose();
 				}
 			} else if (e.getActionCommand().equals("Criar")) {
@@ -119,7 +119,6 @@ public class Gui implements ActionListener {
 					}
 					
 					regraslist.remove(list.getSelectedIndex());
-					//batata
 					guiUpdate(regraslist);
 					
 					

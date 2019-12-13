@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../../../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../../../jacoco-resources/report.gif" type="image/gif"/><title>Worker.java</title><link rel="stylesheet" href="../../../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../../../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../../../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../../../index.html" class="el_report">AllTests (13-Dec-2019 22:19:48)</a> &gt; <a href="../../index.html" class="el_group">ProjetoES2</a> &gt; <a href="../index.html" class="el_bundle">src</a> &gt; <a href="index.source.html" class="el_package">main</a> &gt; <span class="el_source">Worker.java</span></div><h1>Worker.java</h1><pre class="source lang-java linenums">package main;
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DataFormatter;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class Worker {
+
+	private XSSFWorkbook wb;
+	private XSSFSheet sheet;
+	private Gui gui;
+
+
+
+<span class="fc" id="L20">	public Worker(Gui gui) {</span>
+<span class="fc" id="L21">		this.gui = gui;</span>
+<span class="fc" id="L22">	}</span>
+
+	public String[][] createCols(File file) throws InvalidFormatException, IOException {
+<span class="nc" id="L25">		wb = new XSSFWorkbook(file);</span>
+<span class="nc" id="L26">		sheet = wb.getSheetAt(0);</span>
+<span class="nc" id="L27">		int lastRowNum = sheet.getLastRowNum();</span>
+<span class="nc" id="L28">		int length = 0;</span>
+<span class="nc bnc" id="L29" title="All 2 branches missed.">		for (Row row : sheet) {</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">			if (length &lt; row.getLastCellNum())</span>
+<span class="nc" id="L31">				length = row.getLastCellNum();</span>
+		}
+<span class="nc" id="L33">		DataFormatter dataFormatter = new DataFormatter();</span>
+<span class="nc" id="L34">		String[][] cols = new String[lastRowNum + 1][length];</span>
+
+		// PERCORRER O EXCEL E PREENCHER A MATRIZ
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		for (Row row : sheet) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">			for (Cell cell : row) {</span>
+<span class="nc" id="L39">				String cellValue = dataFormatter.formatCellValue(cell);</span>
+<span class="nc" id="L40">				cols[cell.getRowIndex()][cell.getColumnIndex()] = cellValue;</span>
+			}
+		}
+<span class="nc" id="L43">		return cols;</span>
+	}
+
+	public boolean testar(double a, double b) {
+<span class="fc" id="L47">		boolean bool = true;</span>
+<span class="fc bfc" id="L48" title="All 2 branches covered.">		if (b &lt; 0) {</span>
+<span class="fc" id="L49">			b = b * (-1);</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">			return a &lt; b;</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">		} else if (b &gt; 0)</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">			return a &gt; b;</span>
+		else
+<span class="fc" id="L54">			return bool;</span>
+	}
+
+	public String[][] adicionaRegra(Regras regra, String[][] sheet) {
+<span class="fc" id="L58">		String[][] batata = sheet;</span>
+<span class="fc" id="L59">		int lastsheetCol = sheet[0].length;</span>
+<span class="fc" id="L60">		int lastCol = lastsheetCol + 1;</span>
+
+<span class="fc" id="L62">		String[][] temp = new String[sheet.length][lastCol];</span>
+
+<span class="fc" id="L64">		int loc = regra.getLoc();</span>
+<span class="fc" id="L65">		int cyclo = regra.getCyclos();</span>
+<span class="fc" id="L66">		int atfd = regra.getAftd();</span>
+<span class="fc" id="L67">		double laa = regra.getLaa();</span>
+<span class="fc" id="L68">		int erros = 0;</span>
+
+<span class="fc bfc" id="L70" title="All 2 branches covered.">		for (int i = 0; i &lt; sheet.length; i++) {</span>
+
+<span class="fc bfc" id="L72" title="All 2 branches covered.">			for (int j = 0; j &lt; lastCol; j++) {</span>
+
+<span class="fc bfc" id="L74" title="All 2 branches covered.">				if (j &lt; lastsheetCol) {</span>
+					// SE DESCOMENTAR ESTA LINHA JA NÃO FUNCIONA
+<span class="fc" id="L76">					temp[i][j] = sheet[i][j];</span>
+<span class="fc" id="L77">				} else {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">					if (i == 0) {</span>
+<span class="fc" id="L79">						temp[i][lastsheetCol] = regra.getNome();</span>
+<span class="fc" id="L80">					} else {</span>
+<span class="pc bpc" id="L81" title="1 of 4 branches missed.">						if (testar(Integer.parseInt(sheet[i][4]), loc) &amp;&amp; testar(Integer.parseInt(sheet[i][5]), cyclo)</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">								&amp;&amp; testar(Integer.parseInt(sheet[i][6]), atfd)</span>
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">								&amp;&amp; testar(Double.parseDouble(sheet[i][7]), laa))</span>
+<span class="fc" id="L84">							temp[i][lastsheetCol] = &quot;TRUE&quot;;</span>
+
+						else {
+<span class="fc" id="L87">							temp[i][lastsheetCol] = &quot;FALSE&quot;;</span>
+<span class="fc" id="L88">							erros++;</span>
+						}
+					}
+				}
+<span class="fc" id="L92">				System.out.println(i + &quot; &quot; + j);</span>
+			}
+
+		}
+<span class="fc" id="L96">		gui.batata(erros);</span>
+<span class="fc" id="L97">		return temp;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span>AllTests (13-Dec-2019 22:19:48)</div></body></html>

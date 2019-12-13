@@ -130,7 +130,6 @@ public class GUIregras implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		list.clear();
-//		int cma = 0, cme = 0, ama = 0, ame = 0, lama = 0, lame = 0, loma = 0, lome = 0;
 		int c = 0, a = 0, la = 0, lo = 0;
 		try {
 			if (e.getActionCommand().equals("OK")) {
@@ -171,7 +170,14 @@ public class GUIregras implements ActionListener {
 					}
 				}
 				if (ntf.getText().equals("")) {
-					throw new NumberFormatException();
+					throw new Exception();
+				}
+				
+				// Cria a regra, se lo,a,c,la que sao respetivamente LOO ATFD CYCLOS LAA for negativo significa que é menor 
+				// do q o numero, se for positivo é maior do que o numero, se for 0 nao ha regra;
+				
+				if (lo==0 && a==0 && c==0 && la==0 ) {
+					throw new Exception();
 				}
 				Regras regra = new Regras(ntf.getText(), lo, a, c, la);
 
@@ -180,7 +186,7 @@ public class GUIregras implements ActionListener {
 				gui.setRegraslist(list);
 				frame.dispose();
 			}
-		} catch (NumberFormatException ee) {
+		} catch (Exception ee) {
 			JOptionPane.showMessageDialog(frame, "Input Errado");
 		}
 	}

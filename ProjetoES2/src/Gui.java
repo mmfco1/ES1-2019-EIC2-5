@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -17,7 +16,6 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableModel;
-
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 
@@ -113,8 +111,7 @@ public class Gui implements ActionListener {
 
 			} else if (e.getActionCommand().equals("Delete")) {
 				if (list.getSelectedIndex() != -1) {
-					System.out.println(list.getSelectedIndex());
-					System.out.println(regraslist.get(list.getSelectedIndex()));
+					
 					regraslist.remove(list.getSelectedIndex());
 
 					dl.remove(list.getSelectedIndex());

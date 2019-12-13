@@ -1,3 +1,4 @@
+package main;
 import java.io.File;
 import java.io.IOException;
 
@@ -14,14 +15,7 @@ public class Worker {
 	private XSSFSheet sheet;
 	private Gui gui;
 
-//	private final int ROW_LENGTH = 12;
-	public enum RuleType {
-		BIGGER, SMALLER, EQUAL
-	};
 
-	public enum Metric {
-		LOC, CYCLO, ATFD, LAA
-	};
 
 	public Worker(Gui gui) {
 		this.gui = gui;
@@ -61,6 +55,7 @@ public class Worker {
 	}
 
 	public String[][] adicionaRegra(Regras regra, String[][] sheet) {
+		String[][] batata = sheet;
 		int lastsheetCol = sheet[0].length;
 		int lastCol = lastsheetCol + 1;
 
@@ -75,10 +70,9 @@ public class Worker {
 		for (int i = 0; i < sheet.length; i++) {
 
 			for (int j = 0; j < lastCol; j++) {
-				if (i == 14 && j == 12) {
-					System.out.println("TAKE COVER");
-				}
+
 				if (j < lastsheetCol) {
+					// SE DESCOMENTAR ESTA LINHA JA NÃO FUNCIONA
 					temp[i][j] = sheet[i][j];
 				} else {
 					if (i == 0) {
@@ -101,71 +95,6 @@ public class Worker {
 		}
 		gui.batata(erros);
 		return temp;
-	}
-
-	public String[][] editarRegra(Regras regra, String[][] sheet) {
-
-		String[][] temp = new String[sheet.length][sheet[0].length];
-
-		int loc = regra.getLoc();
-		int cyclo = regra.getCyclos();
-		int atfd = regra.getAftd();
-		double laa = regra.getLaa();
-		int erros = 0;
-		int colDaRegra = 0;
-
-		if (regra.getNome().equals("is_long_method"))
-			colDaRegra = 8;
-		if (regra.getNome().equals("is_feature_envy"))
-			colDaRegra = 11;
-
-		for (int i = 0; i < sheet.length; i++) {
-			for (int j = 0; j < sheet[0].length; j++) {
-				if (!(j == colDaRegra)) {
-					temp[i][j] = sheet[i][j];
-				} else {
-					if (i == 0) {
-						temp[i][colDaRegra] = regra.getNome();
-					} else {
-						if (testar(Integer.parseInt(sheet[i][4]), loc) && testar(Integer.parseInt(sheet[i][5]), cyclo)
-								&& testar(Integer.parseInt(sheet[i][6]), atfd)
-								&& testar(Double.parseDouble(sheet[i][7]), laa))
-							temp[i][colDaRegra] = "TRUE";
-
-						else {
-							temp[i][colDaRegra] = "FALSE";
-							erros++;
-						}
-					}
-				}
-
-			}
-
-		}
-//		gui.batata(erros);
-		return temp;
-	}
-
-	public void detecaoDefeitos(String[][] sheet, int a) {
-		int dci = 0, dii = 0, adci = 0, adii = 0;
-		int col = 0;
-		if(a == 0)
-			col = 9;
-		if(a == 1)
-			col = 10;
-		for (int i = 0; i < sheet.length; i++) {
-			if (sheet[i][col].equals("TRUE") && sheet[i][8].equals("TRUE")) {
-				dci++;
-			} else if (sheet[i][col].equals("TRUE") && sheet[i][8].equals("FALSE")) {
-				dii++;
-			} else if (sheet[i][col].equals("FALSE") && sheet[i][8].equals("FALSE")) {
-				adci++;
-			} else {
-				adii++;
-			}
-		}
-		gui.batataErros(dci, dii, adci, adii);
-
 	}
 
 }

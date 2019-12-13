@@ -1,3 +1,4 @@
+package main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -128,17 +129,11 @@ public class GUIregras implements ActionListener {
 	}
 	
 	public GUIregras(Regras r) {
-		guiRegras();
+		ver(r);
 	}
-	
-	public GUIregras() {
-		
-	}
-	
-	
 	
 
-	public void ver(Regras r) {
+	private void ver(Regras r) {
 		JOptionPane.showMessageDialog(frame, r.toString());
 		
 	}

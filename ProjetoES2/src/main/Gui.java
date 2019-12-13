@@ -1,3 +1,4 @@
+package main;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -28,7 +29,7 @@ public class Gui implements ActionListener {
 	private JList<String> list;
 	private ArrayList<Regras> regraslist = new ArrayList<Regras>();
 	private DefaultListModel<String> dl = new DefaultListModel<String>();
-	private JButton choose, thresholds, criar, comparar, run, del, vis;
+	private JButton choose, thresholds, criar, comparar, edit, run, del, vis;
 	private Regras regrabase, regrabase2;
 	private boolean delRegraBase = true, delRegraBase2 = true;
 	private String[][] cols;
@@ -93,6 +94,7 @@ public class Gui implements ActionListener {
 				fileC.setFileSelectionMode(JFileChooser.FILES_ONLY);
 				fileC.showOpenDialog(frame);
 				Worker w = new Worker(this);
+				System.out.println(fileC.getSelectedFile().getAbsolutePath());
 				File file = fileC.getSelectedFile();
 				try {
 					String[][] temp = w.createCols(file);
@@ -118,6 +120,7 @@ public class Gui implements ActionListener {
 						DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
 						table.setModel(dtm);
 						frame2.dispose();
+						
 					}
 				}
 			} else if (e.getActionCommand().equals("Criar")) {
@@ -135,38 +138,17 @@ public class Gui implements ActionListener {
 					}
 				}
 			} else if (e.getActionCommand().equals("Visualizar")) {
-				GUIregras gr = new GUIregras();
-				gr.ver(regraslist.get(list.getSelectedIndex()));
+				if (list.getSelectedIndex() != -1) {
+					GUIregras gr = new GUIregras(regraslist.get(list.getSelectedIndex()));
+				}
 
-			} 
-			
-			//TENTAMOS
-//				else if (e.getActionCommand().equals("Editar")) {
-//				if (list.getSelectedIndex() != -1 || regraslist.get(list.getSelectedIndex()).equals(regrabase)
-//						|| regraslist.get(list.getSelectedIndex()).equals(regrabase2)) {
-//					
-//						GUIregras gr = new GUIregras(regraslist.get(list.getSelectedIndex()));
-//						Worker w = new Worker(this);
-//						String[][] temp = w.editarRegra(regraslist.get(list.getSelectedIndex()), sheet);
-//						sheet = temp;
-//						String[] topRow = temp[0];
-//						DefaultTableModel dtm = new DefaultTableModel(temp, topRow);
-//						table.setModel(dtm);
-//						frame2.dispose();
-//					}
-//				}
+			} else if (e.getActionCommand().equals("Editar")) {
 
-			 else if (e.getActionCommand().equals("Comparar")) {
-				if (sheet == null)
-					JOptionPane.showMessageDialog(frame2, "Nao foi selecionado o excel");
+			} else if (e.getActionCommand().equals("Comparar")) {
 				Object[] options = { "IPlasma", "PMD" };
 				int n = JOptionPane.showOptionDialog(frame2, "Qual quer comparar ?", "",
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
 				System.out.println(n);
-				if (n != (-1)) {
-					Worker w = new Worker(this);
-					w.detecaoDefeitos(sheet, n);
-				}
 			}
 
 		} catch (IllegalArgumentException e2) {
@@ -201,6 +183,7 @@ public class Gui implements ActionListener {
 
 		criar = new JButton("Criar");
 		run = new JButton("Correr");
+		edit = new JButton("Editar");
 		comparar = new JButton("Comparar");
 		del = new JButton("Delete");
 		vis = new JButton("Visualizar");
@@ -215,6 +198,7 @@ public class Gui implements ActionListener {
 		bot.add(criar);
 		bot.add(vis);
 		bot.add(comparar);
+		bot.add(edit);
 		bot.add(del);
 		bot.add(run);
 
@@ -222,6 +206,7 @@ public class Gui implements ActionListener {
 
 		criar.addActionListener(this);
 		del.addActionListener(this);
+		edit.addActionListener(this);
 		run.addActionListener(this);
 		vis.addActionListener(this);
 		comparar.addActionListener(this);
@@ -253,10 +238,6 @@ public class Gui implements ActionListener {
 	public void batata(int a) {
 		JOptionPane.showMessageDialog(frame, "numero de erros = " + a);
 
-	}
-
-	public void batataErros(int a, int b, int c, int d) {
-		JOptionPane.showMessageDialog(frame2, "DCI - " + a + "\nDII - " + b + "\nADCI - " + c + "\nADII - " + d);
 	}
 
 }

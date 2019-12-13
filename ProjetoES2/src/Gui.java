@@ -26,8 +26,10 @@ public class Gui implements ActionListener {
 	private JScrollPane sp;
 	private JList<String> list;
 	private ArrayList<Regras> regraslist = new ArrayList<Regras>();
-	private DefaultListModel<String> dl;
-	private JButton choose, thresholds, edit, run, del;
+	private DefaultListModel<String> dl = new DefaultListModel<String>();
+	private JButton choose, thresholds, edit, run, del, vis;
+	private Regras regrabase;
+	private boolean delRegraBase = true;
 	private String[][] cols;
 	private final String[] ROWS = { "MethodID", "Package", "Class", "Method", "LOC", "CYCLO", "ATFD", "LAA",
 			"is_long_method", "iPlasma", "PMD", "is_feature_envy" };
@@ -111,21 +113,37 @@ public class Gui implements ActionListener {
 
 			} else if (e.getActionCommand().equals("Delete")) {
 				if (list.getSelectedIndex() != -1) {
+					if (regraslist.get(list.getSelectedIndex()).equals(regrabase)) {
+						delRegraBase = false;
+					}
 					
 					regraslist.remove(list.getSelectedIndex());
-
-					dl.remove(list.getSelectedIndex());
+					
+					guiUpdate(regraslist);
+					
+					
 				}
+			} else if (e.getActionCommand().equals("Visualizar")) {
+				GUIregras gr = new GUIregras(regraslist.get(list.getSelectedIndex()));
+				
 			}
 
 		} catch (IllegalArgumentException e2) {
 		}
 
 	}
+	
+	
+	
+	
 
 	public void setRegraslist(ArrayList<Regras> regraslist) {
 		this.regraslist.addAll(regraslist);
+		guiUpdate(this.regraslist);
+	}
 
+	private void guiUpdate(ArrayList<Regras> regraslist) {
+		dl.clear();
 		for (Regras regras : regraslist) {
 			dl.addElement(regras.getNome());
 		}
@@ -135,24 +153,27 @@ public class Gui implements ActionListener {
 	 * 2 gui Francisco Veiga
 	 */
 	private void gui2() {
+		
+		ArrayList<Regras> first = new ArrayList<Regras>();
 		frame2 = new JFrame("Thresholds");
 
 		list = new JList<String>();
-		dl = new DefaultListModel<String>();
 		sp = new JScrollPane(list);
 
 		edit = new JButton("Criar");
 		run = new JButton("Correr");
 		del = new JButton("Delete");
+		vis = new JButton("Visualizar");
 
 		JPanel middle = new JPanel();
 		JPanel bot = new JPanel();
 
 		middle.setLayout(new BorderLayout());
-		bot.setLayout(new GridLayout(1, 3));
+		bot.setLayout(new GridLayout(1, 4));
 
 		list.setModel(dl);
 		bot.add(edit);
+		bot.add(vis);
 		bot.add(del);
 		bot.add(run);
 		middle.add(sp, BorderLayout.CENTER);
@@ -160,14 +181,29 @@ public class Gui implements ActionListener {
 		del.addActionListener(this);
 		edit.addActionListener(this);
 		run.addActionListener(this);
+		vis.addActionListener(this);
 
 		middle.add(bot, BorderLayout.SOUTH);
 
 		frame2.setContentPane(middle);
 		frame2.setVisible(true);
-		frame2.setSize(300, 200);
+		frame2.setSize(500, 200);
 		frame2.setLocationRelativeTo(null);
 		frame2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		
+		regrabase = new Regras("Regra Base", 80, 0, 10, 0);
+		first.add(regrabase);
+		if (delRegraBase) {
+			regraslist.addAll(first);
+			guiUpdate(regraslist);
+			
+		}
+		first.clear();
+		
+		delRegraBase=false;
+		
+		
+	
 
 	}
 

@@ -126,6 +126,16 @@ public class GUIregras implements ActionListener {
 		guiRegras();
 		this.gui = gui;
 	}
+	
+	public GUIregras(Regras r) {
+		ver(r);
+	}
+	
+
+	private void ver(Regras r) {
+		JOptionPane.showMessageDialog(frame, r.toString());
+		
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -145,26 +155,26 @@ public class GUIregras implements ActionListener {
 					}
 				}
 				if (ATFD.isSelected()) {
-					if (!ATFD.getText().equals("")) {
+					if (!maiorATFDTF.getText().equals("")) {
 						a = Integer.parseInt(maiorATFDTF.getText());
-					} else if (!ATFD.getText().equals("")) {
+					} else if (!menorATFDTF.getText().equals("")) {
 						a = Integer.parseInt(menorATFDTF.getText());
 						a = a * (-1);
 					}
 
 				}
 				if (LAA.isSelected()) {
-					if (!LAA.getText().equals("")) {
+					if (!maiorLAATF.getText().equals("")) {
 						la = Integer.parseInt(maiorLAATF.getText());
-					} else if (!LAA.getText().equals("")) {
+					} else if (!menorLAATF.getText().equals("")) {
 						la = Integer.parseInt(menorLAATF.getText());
 						la = la * (-1);
 					}
 				}
 				if (LOC.isSelected()) {
-					if (!LOC.getText().equals("")) {
+					if (!maiorLOCTF.getText().equals("")) {
 						lo = Integer.parseInt(maiorLOCTF.getText());
-					} else if (!LOC.getText().equals("")) {
+					} else if (!menorLOCTF.getText().equals("")) {
 						lo = Integer.parseInt(menorLOCTF.getText());
 						lo = lo * (-1);
 					}

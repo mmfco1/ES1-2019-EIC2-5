@@ -128,11 +128,17 @@ public class GUIregras implements ActionListener {
 	}
 	
 	public GUIregras(Regras r) {
-		ver(r);
+		guiRegras();
 	}
 	
+	public GUIregras() {
+		
+	}
+	
+	
+	
 
-	private void ver(Regras r) {
+	public void ver(Regras r) {
 		JOptionPane.showMessageDialog(frame, r.toString());
 		
 	}

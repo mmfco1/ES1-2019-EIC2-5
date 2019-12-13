@@ -61,7 +61,6 @@ public class Worker {
 	}
 
 	public String[][] adicionaRegra(Regras regra, String[][] sheet) {
-		String[][] batata = sheet;
 		int lastsheetCol = sheet[0].length;
 		int lastCol = lastsheetCol + 1;
 
@@ -143,23 +142,29 @@ public class Worker {
 			}
 
 		}
-		gui.batata(erros);
+//		gui.batata(erros);
 		return temp;
 	}
 
 	public void detecaoDefeitos(String[][] sheet, int a) {
 		int dci = 0, dii = 0, adci = 0, adii = 0;
+		int col = 0;
+		if(a == 0)
+			col = 9;
+		if(a == 1)
+			col = 10;
 		for (int i = 0; i < sheet.length; i++) {
-			if (sheet[i][a].equals("TRUE") && sheet[i][8].equals("TRUE")) {
+			if (sheet[i][col].equals("TRUE") && sheet[i][8].equals("TRUE")) {
 				dci++;
-			} else if (sheet[i][a].equals("TRUE") && sheet[i][8].equals("FALSE")) {
+			} else if (sheet[i][col].equals("TRUE") && sheet[i][8].equals("FALSE")) {
 				dii++;
-			} else if (sheet[i][a].equals("FALSE") && sheet[i][8].equals("FALSE")) {
+			} else if (sheet[i][col].equals("FALSE") && sheet[i][8].equals("FALSE")) {
 				adci++;
 			} else {
 				adii++;
 			}
 		}
+		gui.batataErros(dci, dii, adci, adii);
 
 	}
 

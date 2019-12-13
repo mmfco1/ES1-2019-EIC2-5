@@ -105,7 +105,7 @@ public class Gui implements ActionListener {
 				gui2();
 			} else if (e.getActionCommand().equals("Correr")) {
 				if (list.getSelectedIndex() != -1) {
-					System.out.println("batata");
+					System.out.println("TesteAfonso");
 					regraslist.get(list.getSelectedIndex());
 					frame2.dispose();
 				}

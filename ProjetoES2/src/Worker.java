@@ -50,49 +50,53 @@ public class Worker {
 
 	public boolean testar(int a, int b) {
 		boolean bool = true;
+		if (b < 0) {
+			b = b * (-1);
+			return a < b;
+		}
 		if (b > 0)
-			bool = a > b;
-		if (b < 0)
-			bool = a < (b * (-1));
+			return a > b;
+
 		return bool;
 	}
 
-//	public boolean[] checkMetric(String[][] sheet, int a, int b) {
-//		boolean[] bool = new boolean[sheet.length];
-//
-//		for (int i = 0; i < sheet.length; i++) {
-//			if (testar(Integer.valueOf(sheet[i][a]), b)) {
-//				bool[i] = true;
-//			} else {
-//				bool[i] = false;
-//			}
-//		}
-//		return bool;
-//	}
-
 	public String[][] adicionaRegra(Regras regra, String[][] sheet) {
-		int lastCol = sheet[0].length;
-		String[][] temp = new String[sheet.length][lastCol + 1];
-		temp[0][lastCol] = regra.getNome();
+		int lastsheetCol = sheet[0].length;
+		int lastCol = lastsheetCol + 1;
+
+		String[][] temp = new String[sheet.length][lastCol];
+
 		int loc = regra.getLoc();
 		int cyclo = regra.getCyclos();
 		int atfd = regra.getAftd();
 		int laa = regra.getLaa();
 
-		for(int i = 1; i < sheet.length; i++) {
-			if(testar(Integer.parseInt(sheet[i][5]), loc) &&
-					testar(Integer.parseInt(sheet[i][6]), cyclo) &&
-					testar(Integer.parseInt(sheet[i][7]), atfd) &&
-					testar(Integer.parseInt(sheet[i][8]), laa)) {
-				temp[i][lastCol] = "TRUE";
-			}else {
-				temp[i][lastCol] = "FALSE";
+//		for(int i = 0; i < sheet.length; i++)
+//			for(int j = 0; j < lastCol; j++)
+//				temp[i][j] = sheet[i][j];
+
+		for (int i = 0; i < sheet.length; i++) {
+			for (int j = 0; j < lastCol; j++) {
+				if (j < lastsheetCol) {
+					//SE DESCOMENTAR ESTA LINHA JA NÃO FUNCIONA
+//					temp[i][j] = sheet[i][j];
+				} else {
+					if (i == 0) {
+						temp[i][lastsheetCol] = regra.getNome();
+					} else {
+						if (testar(Integer.parseInt(sheet[i][4]), loc) && testar(Integer.parseInt(sheet[i][5]), cyclo)
+								&& testar(Integer.parseInt(sheet[i][6]), atfd)
+								&& testar(Integer.parseInt(sheet[i][7]), laa)) {
+							temp[i][lastsheetCol] = "TRUE";
+						} else {
+							temp[i][lastsheetCol] = "FALSE";
+						}
+					}
+				}
 			}
 		}
-		
+
 		return temp;
 	}
-
-	
 
 }
